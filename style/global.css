@@ -1,0 +1,67 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+:root {
+  --color-pink: #C67DFF;
+  --color-purple: #7958B3;
+  --color-yellow: #FFFF95;
+  --text-color-dark: #1E1E1E;
+  --font-family-header: 'League Spartan', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato', sans-serif;
+  color: var(--text-color-dark);
+}
+
+
+/* Text */
+.title {
+  font-size: 48px;
+}
+
+.section-title {
+  font-size: 36px;
+}
+
+
+/* Sections */
+section {
+  position: relative;
+  padding: 4rem 16px;
+}
+
+section.centered {
+  text-align: center;
+}
+
+section .inner {
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+section h1.section-title {
+  margin-bottom: 0.6em;
+}
+
+
+/* Page layout */
+.body-inner {
+  min-height: calc(100vh - 64px - 16px);
+}
