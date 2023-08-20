@@ -1,4 +1,7 @@
 <?php
+
+include get_template_directory() . '/src/hooks.php';
+
 /**
  * FUST Website Theme functions and definitions
  */
