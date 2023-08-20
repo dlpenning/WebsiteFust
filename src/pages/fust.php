@@ -6,7 +6,7 @@
             <tr>
                 <th><label>Registrations</label></th>
                 <td>
-                    <a href="#" class="button button-primary">Go to page</a>
+                    <a href="<?= menu_page_url('vxcf_leads') ?>" class="button button-primary">Go to page</a>
                 </td>
             </tr>
         </tbody>
