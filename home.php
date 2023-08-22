@@ -32,7 +32,7 @@ fust_set_title('Homepage');
             <p class="subtitle">
                 F.U.S.T. is a student union dedicated to ensuring high quality of education while also focusing on improving students well-being. <br>
                 What makes us different from other associations is that we represent all students and all associations in the municipality. <br>
-                F.U.S.T. is the main (or only) student collective that has direct communication with the municipality. <br>
+                F.U.S.T. is the main student collective that has direct communication with the municipality. <br>
                 This connection enables us to create significant change, and that the voice of our members is heard. Our vision for the future of Tilburg University is to make it a welcoming place for all, where students can flourish both academically and personally. <br>
                 We value internationalization, safety in the city, mental health, efficient transport and affordable housing along with many other domains where we think Tilburg can improve. If you are a student at Tilburg University or a large association, F.U.S.T. can help you achieve your goals and enjoy this beautiful city!
             </p>
