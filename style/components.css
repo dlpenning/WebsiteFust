@@ -166,8 +166,9 @@ Component: Highlight
 input:not([type=checkbox])
 {
   width: 100%;
-  height: 50px;
-  border-radius: 25px;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid grey;
 }
 
 label {
