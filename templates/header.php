@@ -43,7 +43,7 @@
                     </nav>
                     <div class="right-nav">
                         <a href="/become-a-member" class="item button primary">Become a member</a>
-                        <i class="fa fa-search"></i>
+                        <!--<i class="fa fa-search"></i>-->
                     </div>
                 </div>
             </div>

@@ -10,7 +10,8 @@ fust_set_title('Homepage');
                 <h1 class="title masthead-title">More than just your student union.</h1>
                 <p class="masthead-subtitle">
 
-                F.U.S.T. is a student union dedicated to ensuring high quality of education while also focusing on improving students well-being. What makes us different from other associations is that we represent all students and all associations in the municipality. F.U.S.T. is the main (or only) student collective that has direct communication with the municipality.
+                Representing all students that study and/or live in Tilburg. By involving not only the students of Tilburg but also the associations focused on students we ensure that Tilburg will live up to all it’s potential as a student city. 
+                F.U.S.T. as an union ensures that there is always a place where students feel safe to voice there opinion and be themselves.
 
                 </p>
                 <div><a href="/become-a-member" class="button outline white">Join us now</a></div>
@@ -27,8 +28,14 @@ fust_set_title('Homepage');
     </section>
     <section class="centered">
         <div class="inner">
-            <h1 class="title section-title"><span class="highlight">Your</span> student union</h1>
-            <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc purus sapien, congue a euismod sit amet.</p>
+            <h1 class="title section-title"><span class="highlight">About</span> FUST</h1>
+            <p class="subtitle">
+            F.U.S.T. is a student union dedicated to ensuring high quality of education while also focusing on improving students well-being. <br>
+            What makes us different from other associations is that we represent all students and all associations in the municipality. <br>
+            F.U.S.T. is the main (or only) student collective that has direct communication with the municipality. <br>
+            This connection enables us to create significant change, and that the voice of our members is heard. Our vision for the future of Tilburg University is to make it a welcoming place for all, where students can flourish both academically and personally. <br>
+            We value internationalization, safety in the city, mental health, efficient transport and affordable housing along with many other domains where we think Tilburg can improve. If you are a student at Tilburg University or a large association, F.U.S.T. can help you achieve your goals and enjoy this beautiful city!
+            </p>
         </div>
     </section>
 </main>

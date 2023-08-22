@@ -158,3 +158,15 @@ Component: Highlight
   font-weight: 600;
   z-index: -1;
 }
+
+
+
+/* Sorry Jesse, ik ga CSSen
+    God hebt medelijden met me */
+input {
+  width: 100%;
+}
+
+form>p {
+  margin-bottom: 20px;
+}
