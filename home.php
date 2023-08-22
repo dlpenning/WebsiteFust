@@ -8,10 +8,12 @@ fust_set_title('Homepage');
         <div class="inner">
             <div class="masthead-content">
                 <h1 class="title masthead-title">More than just your student union.</h1>
-                <p class="masthead-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc purus sapien, congue a euismod sit amet, suscipit
-                malesuada ex. Sed eros risus, lacinia in ex ac, ullamcorper venenatis turpis. Aliquam viverra placerat diam, semper
-                feugiat mi convallis ut.</p>
-                <div><a href="#" class="button outline white">Join us now</a></div>
+                <p class="masthead-subtitle">
+
+                F.U.S.T. is a student union dedicated to ensuring high quality of education while also focusing on improving students well-being. What makes us different from other associations is that we represent all students and all associations in the municipality. F.U.S.T. is the main (or only) student collective that has direct communication with the municipality.
+
+                </p>
+                <div><a href="/become-a-member" class="button outline white">Join us now</a></div>
             </div>
             <div class="masthead-figure">
                 <img src="<?= get_template_directory_uri(); ?>/img/stock.png" alt="">

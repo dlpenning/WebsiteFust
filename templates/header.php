@@ -14,9 +14,9 @@
     <div class="body-inner">
         <header class="app-header">
             <div class="top-navbar">
-                <a href="#"><i class="fab fa-tiktok"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                <!--<a href="#"><i class="fab fa-tiktok"></i></a>-->
+                <!--<a href="#"><i class="fab fa-linkedin"></i></a>-->
+                <a href="https://www.instagram.com/fust_tilburg/"><i class="fab fa-instagram"></i></a>
             </div>
             <div class="main-navbar">
                 <div class="main-navbar-inner">
@@ -30,7 +30,7 @@
                         ?>
                     </nav>
                     <div class="right-nav">
-                        <a href="#" class="item button primary">Become a member</a>
+                        <a href="/become-a-member" class="item button primary">Become a member</a>
                         <i class="fa fa-search"></i>
                     </div>
                 </div>
