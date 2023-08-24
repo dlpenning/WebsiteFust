@@ -75,12 +75,12 @@ section h1.section-title {
 /* Media queries */
 @media screen and (max-width: 1000px) {
   :root {
-    --body-padding-horizontal: 48px;
+    --padding-body-horizontal: 48px;
   }
 }
 
 @media screen and (max-width: 480px) {
   :root {
-    --body-padding-horizontal: 20px;
+    --padding-body-horizontal: 20px;
   }
 }

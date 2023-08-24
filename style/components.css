@@ -6,13 +6,21 @@ header.app-header {
 }
 
 header.app-header .top-navbar {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  justify-content: flex-end;
+  display: block;
   padding: 0 var(--padding-body-horizontal);
   height: 32px;
   background-color: var(--color-pink);
+}
+
+header.app-header .top-navbar .top-navbar-inner {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 header.app-header .top-navbar a {
@@ -92,6 +100,7 @@ footer.app-footer {
   background-color: var(--color-purple);
   color: #fff;
   height: 48px;
+  padding: 0 var(--padding-body-horizontal);
 }
 
 footer.app-footer .inner {
@@ -102,7 +111,6 @@ footer.app-footer .inner {
   margin: 0 auto;
   width: 100%;
   height: 100%;
-  padding: 0 var(--padding-body-horizontal);
 }
 
 footer.app-footer .inner .socials {
