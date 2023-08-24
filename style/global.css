@@ -11,6 +11,7 @@
   --color-yellow: #FFFF95;
   --text-color-dark: #1E1E1E;
   --font-family-header: 'League Spartan', sans-serif;
+  --padding-body-horizontal: 64px;
 }
 
 h1,
@@ -20,6 +21,10 @@ h4 {
   font-family: 'League Spartan', sans-serif;
   font-weight: 700;
   margin: 0;
+}
+
+p {
+  line-height: 1.4;
 }
 
 body {
@@ -43,7 +48,7 @@ body {
 /* Sections */
 section {
   position: relative;
-  padding: 4rem 16px;
+  padding: 4rem var(--padding-body-horizontal);
 }
 
 section.centered {
@@ -64,4 +69,18 @@ section h1.section-title {
 /* Page layout */
 .body-inner {
   min-height: calc(100vh - 64px - 16px);
+}
+
+
+/* Media queries */
+@media screen and (max-width: 1000px) {
+  :root {
+    --body-padding-horizontal: 48px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  :root {
+    --body-padding-horizontal: 20px;
+  }
 }

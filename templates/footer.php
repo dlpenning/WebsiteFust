@@ -5,11 +5,11 @@
     </div>
     <footer class="app-footer">
         <div class="inner">
-            <p><b>&copy; FUST, 2023. All rights reserved.</b></p>
+            <p>&copy; FUST, 2023. All rights reserved.</p>
             <div class="socials">
                 <!--<a href="#"><i class="fab fa-tiktok"></i></a>-->
                 <!--<a href="#"><i class="fab fa-linkedin"></i></a>-->
-                <a href="https://www.instagram.com/fust_tilburg/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.instagram.com/fust_tilburg/" target="_blank"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </footer>

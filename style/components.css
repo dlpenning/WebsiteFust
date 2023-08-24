@@ -10,7 +10,7 @@ header.app-header .top-navbar {
   align-items: center;
   gap: 16px;
   justify-content: flex-end;
-  padding: 0 16px;
+  padding: 0 var(--padding-body-horizontal);
   height: 32px;
   background-color: var(--color-pink);
 }
@@ -24,7 +24,7 @@ header.app-header .main-navbar {
   align-items: center;
   height: 64px;
   box-shadow: 0 10px 20px rgba(146, 113, 172, 0.25);
-  padding: 0 16px;
+  padding: 0 var(--padding-body-horizontal);
 }
 
 header.app-header .main-navbar .main-navbar-inner {
@@ -102,7 +102,7 @@ footer.app-footer .inner {
   margin: 0 auto;
   width: 100%;
   height: 100%;
-  padding: 0 16px;
+  padding: 0 var(--padding-body-horizontal);
 }
 
 footer.app-footer .inner .socials {
@@ -169,12 +169,18 @@ input:not([type=checkbox])
   height: 30px;
   border-radius: 5px;
   border: 1px solid grey;
+  margin-top: 6px;
+  padding: 0 12px;
+}
+
+select {
+  margin-top: 6px;
 }
 
 label {
   font-weight: bold;
 }
 
-form>p {
+form > p {
   margin-bottom: 20px;
 }

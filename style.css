@@ -1,13 +1,16 @@
 /*
 Theme Name: FUST Theme
 Author: Jesse Traas & Daan Penning
-Version: 0.1.0
+Version: 0.1.1
 */
 
+/*
+Section: Masthead
+*/
 .masthead {
   background-color: var(--color-purple);
   color: #fff;
-  padding: 8rem 16px;
+  padding: 8rem var(--padding-body-horizontal);
 }
 
 .masthead .inner {
@@ -17,8 +20,12 @@ Version: 0.1.0
   gap: 200px;
 }
 
-.masthead .inner>* {
-  flex-basis: 1;
+.masthead .inner > .masthead-content {
+  flex-basis: 40%;
+}
+
+.masthead .inner > .masthead-figure {
+  flex-basis: 60%;
 }
 
 .masthead-content {
@@ -61,4 +68,23 @@ Version: 0.1.0
   bottom: 0;
   width: 100%;
   height: auto;
+}
+
+
+
+@media screen and (max-width: 1000px) {
+  .masthead {
+    padding: 3rem var(--padding-body-horizontal) 5rem;
+  }
+
+  .masthead .inner {
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .masthead .inner {
+    gap: 24px;
+  }
 }

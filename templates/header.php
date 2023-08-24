@@ -16,7 +16,7 @@
             <div class="top-navbar">
                 <!--<a href="#"><i class="fab fa-tiktok"></i></a>-->
                 <!--<a href="#"><i class="fab fa-linkedin"></i></a>-->
-                <a href="https://www.instagram.com/fust_tilburg/"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.instagram.com/fust_tilburg/" target="_blank"><i class="fab fa-instagram"></i></a>
             </div>
             <div class="main-navbar">
                 <div class="main-navbar-inner">
