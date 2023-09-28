@@ -23,7 +23,6 @@
                 <div class="main-navbar-inner">
                     <nav>
                         <a href="/"><?php include 'logo.php'; ?></a>
-                        
                         <?php
                         wp_nav_menu(
                             array(

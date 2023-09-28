@@ -4,14 +4,17 @@ Component: App header
 header.app-header {
   font: bold 18px var(--font-family-header);
 }
-
+header.app-header a {
+  text-decoration: none;
+  color: var(--text-color-dark);
+  transition: color 200ms;
+}
 header.app-header .top-navbar {
   display: block;
   padding: 0 var(--padding-body-horizontal);
   height: 32px;
   background-color: var(--color-pink);
 }
-
 header.app-header .top-navbar .top-navbar-inner {
   display: flex;
   justify-content: flex-end;
@@ -22,11 +25,9 @@ header.app-header .top-navbar .top-navbar-inner {
   width: 100%;
   margin: 0 auto;
 }
-
 header.app-header .top-navbar a {
   color: #fff;
 }
-
 header.app-header .main-navbar {
   display: flex;
   align-items: center;
@@ -34,7 +35,6 @@ header.app-header .main-navbar {
   box-shadow: 0 10px 20px rgba(146, 113, 172, 0.25);
   padding: 0 var(--padding-body-horizontal);
 }
-
 header.app-header .main-navbar .main-navbar-inner {
   display: flex;
   justify-content: space-between;
@@ -43,23 +43,19 @@ header.app-header .main-navbar .main-navbar-inner {
   width: 100%;
   margin: 0 auto;
 }
-
-header.app-header a {
-  text-decoration: none;
-  color: var(--text-color-dark);
-  transition: color 200ms;
-}
-
 header.app-header .main-navbar .main-navbar-inner nav {
   display: flex;
   align-items: center;
   gap: 48px;
 }
-
 header.app-header .main-navbar .main-navbar-inner nav svg + div {
   display: inline-block;
 }
-
+header.app-header .main-navbar .main-navbar-inner nav svg {
+  height: 45px;
+  width: auto;
+  vertical-align: middle;
+}
 header.app-header .main-navbar .main-navbar-inner nav ul {
   display: flex;
   align-items: center;
@@ -67,31 +63,25 @@ header.app-header .main-navbar .main-navbar-inner nav ul {
   gap: 32px;
   padding: 0;
 }
-
 header.app-header .main-navbar .main-navbar-inner nav li {
   list-style: none;
   display: inline-block;
 }
-
 header.app-header .main-navbar .main-navbar-inner nav li.current-menu-item a {
   color: var(--color-purple);
 }
-
 header.app-header .main-navbar .main-navbar-inner nav li:hover a {
   color: var(--color-pink);
 }
-
 header.app-header .main-navbar .main-navbar-inner .right-nav {
   display: flex;
   align-items: center;
   gap: 32px;
 }
-
 header.app-header .main-navbar .main-navbar-inner .right-nav svg {
   color: var(--color-pink);
   cursor: pointer;
 }
-
 
 /*
 Component: Footer
@@ -102,7 +92,6 @@ footer.app-footer {
   height: 48px;
   padding: 0 var(--padding-body-horizontal);
 }
-
 footer.app-footer .inner {
   display: flex;
   align-items: center;
@@ -112,16 +101,13 @@ footer.app-footer .inner {
   width: 100%;
   height: 100%;
 }
-
 footer.app-footer .inner .socials {
   display: flex;
   gap: 16px;
 }
-
 footer.app-footer .inner .socials a {
   color: #fff;
 }
-
 
 /*
 Component: Button
@@ -129,24 +115,21 @@ Component: Button
 .button {
   display: inline-block;
   padding: 8px 24px;
-  border-radius: 4px;
+  border-radius: 1000px;
   text-decoration: none;
   font-size: 18px;
   font-weight: 600;
 }
-
 .button.primary {
   background-color: var(--color-pink);
   font-weight: 500;
   color: #fff !important;
 }
-
 .button.outline.white {
   background-color: transparent;
   border: 1px solid #fff;
   color: #fff;
 }
-
 
 /*
 Component: Highlight
@@ -154,9 +137,8 @@ Component: Highlight
 .highlight {
   position: relative;
 }
-
 .highlight::after {
-  content: '';
+  content: "";
   position: absolute;
   left: -0.2em;
   top: -0.2em;
@@ -165,30 +147,4 @@ Component: Highlight
   background-color: var(--color-yellow);
   font-weight: 600;
   z-index: -1;
-}
-
-
-
-/* Sorry Jesse, ik ga CSSen
-    God hebt medelijden met me */
-input:not([type=checkbox])
-{
-  width: 100%;
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid grey;
-  margin-top: 6px;
-  padding: 0 12px;
-}
-
-select {
-  margin-top: 6px;
-}
-
-label {
-  font-weight: bold;
-}
-
-form > p {
-  margin-bottom: 20px;
-}
+}/*# sourceMappingURL=components.css.map */

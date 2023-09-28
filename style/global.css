@@ -10,7 +10,7 @@
   --color-purple: #7958B3;
   --color-yellow: #FFFF95;
   --text-color-dark: #1E1E1E;
-  --font-family-header: 'League Spartan', sans-serif;
+  --font-family-header: "League Spartan", sans-serif;
   --padding-body-horizontal: 64px;
 }
 
@@ -18,7 +18,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: 'League Spartan', sans-serif;
+  font-family: "League Spartan", sans-serif;
   font-weight: 700;
   margin: 0;
 }
@@ -30,10 +30,9 @@ p {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   color: var(--text-color-dark);
 }
-
 
 /* Text */
 .title {
@@ -43,7 +42,6 @@ body {
 .section-title {
   font-size: 36px;
 }
-
 
 /* Sections */
 section {
@@ -65,12 +63,10 @@ section h1.section-title {
   margin-bottom: 0.6em;
 }
 
-
 /* Page layout */
 .body-inner {
   min-height: calc(100vh - 64px - 16px);
 }
-
 
 /* Media queries */
 @media screen and (max-width: 1000px) {
@@ -78,9 +74,8 @@ section h1.section-title {
     --padding-body-horizontal: 48px;
   }
 }
-
 @media screen and (max-width: 480px) {
   :root {
-    --padding-body-horizontal: 20px;
+    --padding-body-horizontal: 40px;
   }
-}
+}/*# sourceMappingURL=global.css.map */

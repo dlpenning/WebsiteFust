@@ -9,7 +9,7 @@ include get_template_directory() . '/src/hooks.php';
 function add_fust_stylesheets() {
 	wp_enqueue_style('global', get_template_directory_uri() . '/style/global.css');
 	wp_enqueue_style('components', get_template_directory_uri() . '/style/components.css');
-	wp_enqueue_style('style', get_stylesheet_uri());
+	wp_enqueue_style('style', get_template_directory_uri() . '/style/style.css');
 }
 
 function add_fust_app_header() {

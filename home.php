@@ -15,7 +15,7 @@ fust_set_title('Homepage');
                 <div><a href="/become-a-member" class="button outline white">Join us now</a></div>
             </div>
             <div class="masthead-figure">
-                <img src="<?= get_template_directory_uri(); ?>/img/stock.png" alt="">
+                <img src="<?= get_template_directory_uri(); ?>/img/20230829-fust-066.jpg" alt="">
                 <div class="graphic"></div>
             </div>
         </div>
