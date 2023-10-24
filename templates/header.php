@@ -35,6 +35,31 @@
                         <a href="/become-a-member" class="item button primary">Become a member</a>
                         <!--<i class="fa fa-search"></i>-->
                     </div>
+                    <div class="nav-burger">
+                        <?php include 'burger.php'; ?>
+                    </div>
+                </div>
+
+                <div class="nav-screen">
+                    <header class="nav-screen-header">
+                        <div class="nav-close">
+                            <i class="fa fa-times fa-2x nav-close"></i>
+                        </div>
+                        <div class="nav-screen-search">
+                            <span>Search</span><i class="fa fa-search"></i>
+                        </div>
+                    </header>
+                    <?php
+                        wp_nav_menu(
+                            array(
+                                'theme_location' => 'fust-app-header',
+                            )
+                        );
+                    ?>
+                    <a href="/become-a-member" class="item button primary">Become a member</a>
+                    <div class="nav-screen-socials">
+                        <?php include 'socials.php'; ?>
+                    </div>
                 </div>
             </div>
         </header>

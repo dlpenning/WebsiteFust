@@ -32,6 +32,10 @@ body {
   padding: 0;
   font-family: 'Lato', sans-serif;
   color: var(--text-color-dark);
+
+  &.overflow-hidden {
+    overflow: hidden;
+  }
 }
 
 
