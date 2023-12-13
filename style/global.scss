@@ -8,8 +8,9 @@
 :root {
   --color-pink: #C67DFF;
   --color-purple: #7958B3;
-  --color-yellow: #FFFF95;
+  --color-yellow: #FFBD59;
   --text-color-dark: #1E1E1E;
+  --text-color-body: rgba(30, 30, 30, 0.8);
   --font-family-header: 'League Spartan', sans-serif;
   --padding-body-horizontal: 64px;
 }
@@ -38,6 +39,23 @@ body {
   }
 }
 
+article {
+  color: var(--text-color-body);
+  margin-top: 20px;
+  
+  p {
+    line-height: 1.75;
+    margin-bottom: 8px;
+  }
+}
+
+.abs-centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 
 /* Text */
 .title {
@@ -46,6 +64,10 @@ body {
 
 .section-title {
   font-size: 36px;
+}
+
+.subtitle {
+  font-size: 1.2rem;
 }
 
 
@@ -59,7 +81,7 @@ section.centered {
   text-align: center;
 }
 
-section .inner {
+section .section-content {
   max-width: 1300px;
   width: 100%;
   margin: 0 auto;
@@ -73,6 +95,11 @@ section h1.section-title {
 /* Page layout */
 .body-inner {
   min-height: calc(100vh - 64px - 16px);
+}
+
+/* Plugin components */
+.grecaptcha-badge {
+  visibility: hidden;
 }
 
 
