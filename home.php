@@ -9,8 +9,8 @@ fust_set_title('Homepage');
             <div class="masthead-content">
                 <h1 class="title masthead-title">More than just your student union.</h1>
                 <p class="masthead-subtitle">
-                    Representing all students that study and/or live in Tilburg. By involving not only the students of Tilburg but also the associations focused on students we ensure that Tilburg will live up to all it's potential as a student city.
-                    F.U.S.T. as a union ensures that there is always a place where students feel safe to voice there opinion and be themselves.
+                    Representing all students that study and/or live in Tilburg. By involving not only the students of Tilburg but also the associations focused on students we ensure that Tilburg will live up to all its potential as a student city.
+                    F.U.S.T. as a union ensures that there is always a place where students feel safe to voice their opinion and be themselves.
                 </p>
                 <div><a href="/become-a-member" class="button outline white">Join us now</a></div>
             </div>

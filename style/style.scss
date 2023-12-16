@@ -139,6 +139,99 @@ form>p {
   margin-bottom: 20px;
 }
 
+/*
+Section: Login
+*/
+.fust-login {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+
+  &-left, &-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  svg {
+    width: 200px;
+    height: auto;
+  }
+
+  &-right {
+    background: linear-gradient(108deg, var(--color-pink) 0%, var(--color-purple) 100.41%), var(--color-pink);
+  }
+
+  &-card {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 48px 42px;
+    width: 450px;
+  }
+
+  h1 {
+    margin-bottom: 24px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 24px;
+
+    input {
+      padding: 9px 20px;
+      height: auto;
+      margin: 0;
+      border-color: #D1D5D8;
+      font-size: 16px;
+
+      &:focus {
+        outline-color: #4F4F4F;
+      }
+
+      &[type=submit]:focus {
+        outline-color: var(--color-purple);
+      }
+    }
+
+    input:auto-fill {
+      border-color: #f00 !important;
+    }
+
+    label {
+      display: inline-block;
+      font-weight: normal;
+      margin-bottom: 8px;
+    }
+  }
+
+  .field.actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-basis: auto;
+    gap: 20px;
+
+    input[type=submit] {
+      flex-basis: 50%;
+    }
+
+    a {
+      font-weight: bold;
+
+      &.link {
+        color: #4F4F4F;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .button {
+    border-radius: 6px;
+  }
+}
+
 
 
 @media screen and (max-width: 1000px) {

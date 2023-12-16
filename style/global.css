@@ -7,6 +7,7 @@
 
 :root {
   --color-pink: #C67DFF;
+  --color-pink-light: #cd8ffd;
   --color-purple: #7958B3;
   --color-yellow: #FFBD59;
   --text-color-dark: #1E1E1E;
@@ -36,6 +37,11 @@ body {
 }
 body.overflow-hidden {
   overflow: hidden;
+}
+
+input, textarea {
+  font-family: "Lato", sans-serif;
+  color: var(--text-color-dark);
 }
 
 article {
@@ -87,9 +93,9 @@ section h1.section-title {
   margin-bottom: 0.6em;
 }
 
-/* Page layout */
+/* Page layout (keeps footer stuck to bottom) */
 .body-inner {
-  min-height: calc(100vh - 64px - 16px);
+  min-height: calc(100vh - 48px);
 }
 
 /* Plugin components */
