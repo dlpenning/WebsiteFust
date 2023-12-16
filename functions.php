@@ -60,6 +60,36 @@ add_action('init', ['FUST_News', 'setup']);
 add_action('admin_menu', 'post_remove');
 
 
+/**
+ * Definition of custom logged-in user experience (logic)
+ */
+
+// Redirect login to custom login
+add_action('init', 'custom_login_redirect');
+
+function custom_login_redirect() {
+    global $pagenow;
+
+    // Check if there is any post data. If so, allow the request as normal.
+    if (!empty($_POST)) {
+        return;
+    }
+    
+    // Check if a $_GET['action'] is set, and if so, load it into $action variable
+    $action = (isset($_GET['action'])) ? $_GET['action'] : '';
+
+    // Check if we're on the login page, and ensure the action is not 'logout'
+    if ($pagenow == 'wp-login.php' && (!$action || ($action && !in_array($action, ['logout', 'lostpassword', 'rp', 'resetpass'])))) {
+        
+        // Redirect to the custom login page
+        wp_redirect('/fust-login');
+
+        // Stop execution to prevent the page loading for any reason
+        exit();
+    }
+}
+
+
 
 
 /* ------- Front-end formatting functions --------*/

@@ -116,6 +116,83 @@ form > p {
   margin-bottom: 20px;
 }
 
+/*
+Section: Login
+*/
+.fust-login {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+}
+.fust-login-left, .fust-login-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fust-login svg {
+  width: 200px;
+  height: auto;
+}
+.fust-login-right {
+  background: linear-gradient(108deg, var(--color-pink) 0%, var(--color-purple) 100.41%), var(--color-pink);
+}
+.fust-login-card {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 48px 42px;
+  width: 450px;
+}
+.fust-login h1 {
+  margin-bottom: 24px;
+}
+.fust-login form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 24px;
+}
+.fust-login form input {
+  padding: 9px 20px;
+  height: auto;
+  margin: 0;
+  border-color: #D1D5D8;
+  font-size: 16px;
+}
+.fust-login form input:focus {
+  outline-color: #4F4F4F;
+}
+.fust-login form input[type=submit]:focus {
+  outline-color: var(--color-purple);
+}
+.fust-login form input:auto-fill {
+  border-color: #f00 !important;
+}
+.fust-login form label {
+  display: inline-block;
+  font-weight: normal;
+  margin-bottom: 8px;
+}
+.fust-login .field.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: auto;
+  gap: 20px;
+}
+.fust-login .field.actions input[type=submit] {
+  flex-basis: 50%;
+}
+.fust-login .field.actions a {
+  font-weight: bold;
+}
+.fust-login .field.actions a.link {
+  color: #4F4F4F;
+  text-decoration: none;
+}
+.fust-login .button {
+  border-radius: 6px;
+}
+
 @media screen and (max-width: 1000px) {
   .masthead {
     padding: 3rem var(--padding-body-horizontal) 5rem;
