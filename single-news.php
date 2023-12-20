@@ -4,8 +4,8 @@ fust_set_title(the_title('', '', false));
 
 <?= get_template_part('templates/header') ?>
 
-<main role="main" class="no-banner">
-    <section class="post-content">
+<main role="main">
+    <section class="post-content reduced-top-space">
         <div class="section-content">
 
             <?php if (has_post_thumbnail()): ?>
