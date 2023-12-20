@@ -36,7 +36,9 @@
                     <i class="fa fa-times fa-2x nav-close"></i>
                 </div>
                 <div class="nav-screen-search">
-                    <span>Search</span><i class="fa fa-search"></i>
+                    <a href="/fust-login">
+                        <i class="fa <?= is_user_logged_in() ? 'fas' : 'far' ?> fa-user"></i>
+                    </a>
                 </div>
             </header>
             <?php

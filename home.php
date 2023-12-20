@@ -29,11 +29,15 @@ fust_set_title('Homepage');
             <h1 class="title section-title">About F.U.S.T.</h1>
             <p class="subtitle"><i><b>F.U.S.T.</b> is a student union dedicated to ensuring high quality of education while also focusing on improving students well-being.</i></p>
             <div class="about-container">
-                <p>What makes us different from other associations is that we represent all students and all associations in the municipality.
+                <p class="row-1-text">What makes us different from other associations is that we represent all students and all associations in the municipality.
                 F.U.S.T. is the main student collective that has direct communication with the municipality. This connection enables us to create significant change, and that the voice of our members is heard. Our vision for the future of Tilburg University is to make it a welcoming place for all, where students can flourish both academically and personally.</p>
-                <div class="image-placeholder placeholder-shimmer"></div>
-                <div class="image-placeholder placeholder-shimmer"></div>
-                <p>We value internationalization, safety in the city, mental health, efficient transport and affordable housing along with many other domains where we think Tilburg can improve. If you are a student at Tilburg University or a large association, F.U.S.T. can help you achieve your goals and enjoy this beautiful city!</p>
+                <div class="image-container row-1-image">
+                    <img src="<?= get_template_directory_uri(); ?>/img/undraw_having_fun_re_vj4h.svg" alt="">
+                </div>
+                <div class="image-container row-2-image">
+                    <img src="<?= get_template_directory_uri(); ?>/img/undraw_teamwork_hpdk.svg" alt="">
+                </div>
+                <p class="row-2-text">We value internationalization, safety in the city, mental health, efficient transport and affordable housing along with many other domains where we think Tilburg can improve. If you are a student at Tilburg University or a large association, F.U.S.T. can help you achieve your goals and enjoy this beautiful city!</p>
             </div>
         </div>
     </section>

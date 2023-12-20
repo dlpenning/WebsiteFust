@@ -27,7 +27,7 @@ class FUST_News
 						'all_items'          => __( 'All News Items',          'fust' ),
 					), 	
 					'menu_icon' => 'dashicons-desktop', 
-					'supports' => array( 'title', 'editor', 'thumbnail' ),
+					'supports' => array( 'title', 'editor', 'thumbnail', 'custom-fields'),
 					'publicly_queryable' => true,
 					'show_ui' => true, 
 					'show_in_menu' => true, 
