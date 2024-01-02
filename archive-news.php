@@ -1,20 +1,22 @@
 <?php 
 fust_set_title('News');
 
-function is_external() {
-    if (get_post_custom_values('external_link')) {
+function is_external($post) {
+    $external_link = get_post_meta($post->ID, 'external_link', true);
+
+    if ($external_link) {
         return true;
     }
 
     return false;
 }
 
-function get_the_custom_permalink($p) {
-    if (is_external()) {
-        return implode('', get_post_custom_values('external_link'));
+function get_the_custom_permalink($post) {
+    if (is_external($post)) {
+        return get_post_meta($post->ID, 'external_link', true);
     }
 
-    return get_the_permalink($p);
+    return get_the_permalink($post);
 }
 ?>
 
@@ -29,7 +31,7 @@ function get_the_custom_permalink($p) {
 
             <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
                 <div class="news-grid-item">
-                    <a href="<?= get_the_custom_permalink($p) ?>" target="<?php if (is_external()) { ?>_blank<?php } ?>" >
+                    <a href="<?= get_the_custom_permalink($post) ?>" target="<?php if (is_external($post)) { ?>_blank<?php } ?>" >
                         <div class="thumbnail">
                             <?php if (has_post_thumbnail()) { ?>
                                 <img class="post-thumbnail" src="<?php the_post_thumbnail_url('medium'); ?>">
@@ -39,9 +41,9 @@ function get_the_custom_permalink($p) {
                         </div>
                     </a>
                     <div class="lower">
-                        <a href="<?= get_the_custom_permalink($p) ?>" target="<?php if (is_external()) { ?>_blank<?php } ?>" >
+                        <a href="<?= get_the_custom_permalink($post) ?>" target="<?php if (is_external($post)) { ?>_blank<?php } ?>" >
                             <h3><?= get_the_title($p) ?></h3>
-                            <?php if (is_external()) { ?>
+                            <?php if (is_external($post)) { ?>
                                 <i class="fa fa-external-link-alt"></i>
                             <?php } ?>
                         </a>
