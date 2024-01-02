@@ -1,5 +1,9 @@
 <?php
 fust_set_title('Homepage');
+
+$services = fust_get_services();
+$top_services = array_slice($services, 0, 4);
+
 ?>
 <?= get_template_part('templates/header') ?>
 
@@ -39,6 +43,31 @@ fust_set_title('Homepage');
                 </div>
                 <p class="row-2-text">We value internationalization, safety in the city, mental health, efficient transport and affordable housing along with many other domains where we think Tilburg can improve. If you are a student at Tilburg University or a large association, F.U.S.T. can help you achieve your goals and enjoy this beautiful city!</p>
             </div>
+        </div>
+    </section>
+    <div class="section-divider"></div>
+    <section>
+        <div class="section-content">
+            <h1 class="title section-title">Services</h1>
+            <p>We provide a number of (digital) services exclusively for our members. Check out our top services below!</p>
+
+            <div class="services-grid section-container">
+
+            <?php foreach ($top_services as $service) { ?>
+                <a class="services-grid-item" href="<?= service_get_the_custom_permalink($service) ?>" target="<?php if (service_is_external($service)) { ?>_blank<?php } ?>" >
+                    <div class="services-grid-item-upper">
+                        <i class="fas <?= service_get_the_icon($service) ?>"></i>
+                        <?php if (service_is_external($service)) { ?>
+                            <i class="fa fa-external-link-alt"></i>
+                        <?php } ?>
+                    </div>
+                    <div class="services-grid-item-lower">
+                        <span title="<?= get_the_title($service->ID) ?>"><?= get_the_title($service->ID) ?></span>
+                    </div>
+                </a>
+            <?php } ?>
+            </div>
+            <a href="/services" class="button primary">View all services</a>
         </div>
     </section>
 </main>

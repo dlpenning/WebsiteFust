@@ -101,6 +101,15 @@ section h1.section-title {
   margin-bottom: 0.6em;
 }
 
+.section-container {
+  margin: 48px auto;
+}
+
+.section-divider {
+  border-bottom: 1px solid #bebebe;
+  margin: 4rem auto;
+}
+
 
 /* Page layout (keeps footer stuck to bottom) */
 .body-inner {

@@ -5,6 +5,7 @@ define('FUST_THEME_DIR', get_template_directory());
 
 include FUST_THEME_DIR . '/includes/class-fust.php';
 include FUST_THEME_DIR . '/includes/post_types/class.news.php';
+include FUST_THEME_DIR . '/includes/post_types/class.service.php';
 
 FUST::hooks();
 
@@ -56,6 +57,7 @@ add_image_size('square-small', 256, 256, false);
 add_action('init', 'add_fust_app_header');
 add_action('wp_enqueue_scripts', 'add_fust_stylesheets');
 add_action('init', ['FUST_News', 'setup']);
+add_action('init', ['FUST_Service', 'setup']);
 
 add_action('admin_menu', 'post_remove');
 
@@ -89,6 +91,42 @@ function custom_login_redirect() {
     }
 }
 
+function fust_get_services() {
+    // Setup service query
+    $service_query = new WP_Query( [
+        'post_type' => 'service'
+    ]);
+
+    return $service_query->posts;
+}
+
+function service_is_external($post) {
+    $external_link = get_post_meta($post->ID, 'external_link', true);
+
+    if ($external_link) {
+        return true;
+    }
+
+    return false;
+}
+
+function service_get_the_custom_permalink($post) {
+    if (service_is_external($post)) {
+        return get_post_meta($post->ID, 'external_link', true);
+    }
+
+    return get_the_permalink($post);
+}
+
+function service_get_the_icon($post) {
+    $icon = get_post_meta($post->ID, 'icon', true);
+
+    if ($icon) {
+        return $icon;
+    }
+
+    return 'fa-calculator';
+}
 
 
 

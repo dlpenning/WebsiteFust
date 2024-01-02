@@ -242,6 +242,59 @@ Component: News archive
 }
 
 /*
+Component: Services grid
+*/
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 36px;
+}
+.services-grid-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: end;
+  height: 170px;
+  padding: 24px 32px;
+  border-radius: 8px;
+  border: 3px solid var(--color-yellow);
+  border-bottom-width: 6px;
+  text-decoration: none;
+  transition: height 100ms, border-bottom-width 100ms;
+}
+.services-grid-item:hover {
+  height: 167px;
+  border-bottom-width: 3px;
+}
+.services-grid-item:hover .services-grid-item-lower span {
+  color: var(--color-yellow);
+}
+.services-grid-item-upper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.services-grid-item-upper svg:first-child {
+  height: 32px;
+  width: auto;
+  color: var(--color-yellow);
+}
+.services-grid-item-upper svg:not(:first-child) {
+  color: #aaa;
+}
+.services-grid-item-lower span {
+  color: var(--text-color-dark);
+  font: bold 22px var(--font-family-header);
+  line-height: 140%;
+  transition: color 100ms;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/*
 Component: Footer
 */
 footer.app-footer {
