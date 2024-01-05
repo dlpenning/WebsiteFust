@@ -91,6 +91,70 @@ function custom_login_redirect() {
     }
 }
 
+
+/**
+ * Create a WordPress user with a generated password.
+ * 
+ * @since 0.2.2
+ */
+function create_fust_user_with_generated_password($username, $email, $display_name) {
+    if (!is_user_logged_in() || !current_user_can('administrator')) {
+        return false;
+    }
+
+    // Generate a password
+    $password = wp_generate_password();
+
+    // Create user data
+    $userdata = array(
+        'user_login'    => $username,
+        'user_pass'     => $password,
+        'user_email'    => $email,
+        'display_name'  => $display_name,
+        'role'          => 'subscriber', // You can set the user role here
+    );
+
+    // Create the user
+    $user_id = wp_create_user($userdata['user_login'], $userdata['user_pass'], $userdata['user_email']);
+
+    // Check if the user was created successfully
+    if (is_wp_error($user_id)) {
+        echo "Error creating user: " . $user_id->get_error_message();
+    } else {
+        echo "User created successfully! ID: " . $user_id;
+
+        // Send email notification to user and site admin
+        wp_new_user_notification($user_id, $password);
+    }
+}
+
+function fust_get_vxcf_entries() {
+    global $wpdb;
+
+    $rows = $wpdb->get_results("SELECT name, value, lead_id FROM wp_vxcf_leads_detail");
+
+    // Initialize an array to store the parsed leads
+    $parsedLeads = array();
+
+    // Loop through the query results
+    foreach ($rows as $row) {
+        $leadId = $row->lead_id;
+        $fieldName = $row->name;
+        $fieldValue = $row->value;
+
+        // Check if the lead entry exists in the parsedLeads array
+        if (!isset($parsedLeads[$leadId])) {
+            // If not, initialize a new lead entry
+            $parsedLeads[$leadId] = array();
+        }
+
+        // Add the field to the lead entry
+        $parsedLeads[$leadId][$fieldName] = $fieldValue;
+    }
+
+    return $parsedLeads;
+}
+
 function fust_get_services() {
     // Setup service query
     $service_query = new WP_Query( [
@@ -143,46 +207,6 @@ function get_excerpt($limit, $source = null) {
     $excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
     $excerpt = $excerpt.'&hellip;';
     return $excerpt;
-}
-
-function get_days_ago($date) {
-    $date = new DateTime($date);
-    $now = new DateTime();
-    $diff = $date->diff($now)->format("%a");
-    $days = intval($diff);
-    switch ($days) {
-        case 0:
-            return 'Vandaag';
-            break;
-
-        case 1:
-            return $days.' dag geleden';
-            break;
-        
-        default:
-            return $days.' dagen geleden';
-            break;
-    }
-}
-
-function get_days_ahead($date) {
-    $date = new DateTime($date);
-    $now = new DateTime();
-    $diff = $now->diff($date)->format("%a");
-    $days = intval($diff);
-    switch ($days) {
-        case 0:
-            return 'Vandaag';
-            break;
-
-        case 1:
-            return 'Over '.$days.' dag';
-            break;
-        
-        default:
-            return 'Over '.$days.' dagen';
-            break;
-    }
 }
 
 // Line Break Shortcode
