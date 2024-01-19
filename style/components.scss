@@ -280,6 +280,7 @@ Component: Services grid
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 36px;
+  min-height: 170px;
 
   &-item {
     display: flex;

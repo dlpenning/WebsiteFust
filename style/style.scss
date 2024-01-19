@@ -132,29 +132,177 @@ Section: News
 /*
 Section: Input form
 */
-input:not([type=checkbox]) {
-  width: 100%;
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid grey;
-  margin-top: 6px;
-  padding: 0 12px;
-}
-
-select {
-  margin-top: 6px;
-}
-
-label {
-  font-weight: bold;
-}
-
-form > p {
-  margin-bottom: 20px;
-}
 
 .wpcf7 {
   margin-top: 0.6em;
+
+  // General field positioning and styling
+  form > p {
+    padding: 20px 0;
+    border-bottom: 1px solid #D1D5D8;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+
+    & > * {
+      width: 100%;
+    }
+      
+    & > label:first-child {
+      flex: 0 0 30%;
+      font-weight: bold;
+
+      & + * {
+        width: 100%;
+      }
+    }
+
+    & > * label {
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+  }
+
+  input:not([type=checkbox]):not([type=submit]), select {
+    width: 100%;
+    height: auto;
+    padding: 9px 20px;
+    border-radius: 6px;
+    border: 1px solid #D1D5D8;
+    outline-color: var(--color-pink);
+    transition: border 100ms;
+    
+    &::placeholder { color: #aaa; }
+
+    &:hover, &:focus {
+      border-color: var(--color-pink);
+    }
+  }
+
+  select {
+    background-color: #fff;
+  }
+
+  input[type=submit] {
+    display: inline-block;
+    padding: 8px 24px;
+    border-radius: 1000px;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1rem;
+    border: none;
+    outline-color: var(--color-purple);
+    background-color: var(--color-pink);
+    color: #fff;
+    transition: background-color 200ms;
+
+    &:hover {
+      background-color: var(--color-pink-light);
+    }
+
+    &:not([disabled]) {
+      cursor: pointer;
+    }
+  }
+
+  // Special styling for bottom rows (no bar, styling for checkbox)
+  form > p:nth-last-child(2),
+  form > p:nth-last-child(3) {
+    border: none;
+    display: inline-block;
+  }
+
+  form > p:nth-last-child(3) { display: block; }
+
+  [data-name=pay-consent] {
+    .wpcf7-list-item {
+      margin-left: 0;
+    }
+    
+    .wpcf7-list-item-label {
+      margin-left: 8px;
+    }
+  }
+
+  // Icon setup
+  .wpcf7-form-control-wrap {
+    display: block;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 18px; // Half of a single row height of the input element
+      transform: translateY(-50%);
+      width: 20px;
+      display: flex;
+      justify-content: center;
+      font-size: 14px;
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+    }
+  }
+
+  // Special icon inputs
+  .wpcf7-form-control-wrap[data-name=your-email]::before { content: '\f0e0'; font-family: 'Font Awesome 5 Free'; font-weight: 400; }
+  .wpcf7-form-control-wrap[data-name=telephone]::before { content: '\f095'; font-weight: 900; }
+  .wpcf7-form-control-wrap[data-name=full-address]::before { content: '\f276'; }
+  .wpcf7-form-control-wrap[data-name=iban]::before { content: '\f09d'; font-weight: 400; }
+
+  span[data-name=your-email] input:not([type=checkbox]),
+  span[data-name=telephone] input:not([type=checkbox]),
+  span[data-name=full-address] input:not([type=checkbox]),
+  span[data-name=iban] input:not([type=checkbox]) {
+    padding: 9px 20px 9px 45px;
+  }
+
+  // Show or hide the "else" option for institution
+  .institution-field * + * { margin-top: 20px; }
+
+  #institution-else,
+  #institution-else + * {
+    display: none;
+  }
+
+  #institution-else .wpcf7-form-control-wrap {
+    margin-top: 6px;
+  }
+
+  [data-institution-else-visible=true] #institution-else,
+  [data-institution-else-visible=true] #institution-else + * {
+    display: block;
+  }
+
+  // Invalid state
+  input.wpcf7-not-valid {
+    border-color: #ff5757;
+  }
+
+  .wpcf7-not-valid-tip {
+    color: #ff5757;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  @media screen and (max-width: 700px) {
+    form > p {
+      display: block;
+      border: none;
+      padding: 0;
+
+      & + p,
+      span + span {
+        display: block;
+        margin-top: 1rem;
+      }
+
+      & > label {
+        display: block;
+        margin-bottom: 6px;
+      }
+    }
+  }
 }
 
 /*
