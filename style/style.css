@@ -64,7 +64,8 @@ Section: Home about
   display: flex;
   flex-flow: row wrap;
   row-gap: 6rem;
-  column-gap: 20px;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
   align-items: center;
   text-align: left;
   margin-top: 2.5rem;
@@ -107,29 +108,160 @@ Section: News
 /*
 Section: Input form
 */
-input:not([type=checkbox]) {
-  width: 100%;
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid grey;
-  margin-top: 6px;
-  padding: 0 12px;
-}
-
-select {
-  margin-top: 6px;
-}
-
-label {
-  font-weight: bold;
-}
-
-form > p {
-  margin-bottom: 20px;
-}
-
 .wpcf7 {
   margin-top: 0.6em;
+}
+.wpcf7 form > p {
+  padding: 20px 0;
+  border-bottom: 1px solid #D1D5D8;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.wpcf7 form > p > * {
+  width: 100%;
+}
+.wpcf7 form > p > label:first-child {
+  flex: 0 0 30%;
+  font-weight: bold;
+}
+.wpcf7 form > p > label:first-child + * {
+  width: 100%;
+}
+.wpcf7 form > p > * label {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.wpcf7 input:not([type=checkbox]):not([type=submit]), .wpcf7 select {
+  width: 100%;
+  height: auto;
+  padding: 9px 20px;
+  border-radius: 6px;
+  border: 1px solid #D1D5D8;
+  outline-color: var(--color-pink);
+  transition: border 100ms;
+}
+.wpcf7 input:not([type=checkbox]):not([type=submit])::-moz-placeholder, .wpcf7 select::-moz-placeholder {
+  color: #aaa;
+}
+.wpcf7 input:not([type=checkbox]):not([type=submit])::placeholder, .wpcf7 select::placeholder {
+  color: #aaa;
+}
+.wpcf7 input:not([type=checkbox]):not([type=submit]):hover, .wpcf7 input:not([type=checkbox]):not([type=submit]):focus, .wpcf7 select:hover, .wpcf7 select:focus {
+  border-color: var(--color-pink);
+}
+.wpcf7 select {
+  background-color: #fff;
+}
+.wpcf7 input[type=submit] {
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: 1000px;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1rem;
+  border: none;
+  outline-color: var(--color-purple);
+  background-color: var(--color-pink);
+  color: #fff;
+  transition: background-color 200ms;
+}
+.wpcf7 input[type=submit]:hover {
+  background-color: var(--color-pink-light);
+}
+.wpcf7 input[type=submit]:not([disabled]) {
+  cursor: pointer;
+}
+.wpcf7 form > p:nth-last-child(2),
+.wpcf7 form > p:nth-last-child(3) {
+  border: none;
+  display: inline-block;
+}
+.wpcf7 form > p:nth-last-child(3) {
+  display: block;
+}
+.wpcf7 [data-name=pay-consent] .wpcf7-list-item {
+  margin-left: 0;
+}
+.wpcf7 [data-name=pay-consent] .wpcf7-list-item-label {
+  margin-left: 8px;
+}
+.wpcf7 .wpcf7-form-control-wrap {
+  display: block;
+}
+.wpcf7 .wpcf7-form-control-wrap::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 18px;
+  transform: translateY(-50%);
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+.wpcf7 .wpcf7-form-control-wrap[data-name=your-email]::before {
+  content: "\f0e0";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 400;
+}
+.wpcf7 .wpcf7-form-control-wrap[data-name=telephone]::before {
+  content: "\f095";
+  font-weight: 900;
+}
+.wpcf7 .wpcf7-form-control-wrap[data-name=full-address]::before {
+  content: "\f276";
+}
+.wpcf7 .wpcf7-form-control-wrap[data-name=iban]::before {
+  content: "\f09d";
+  font-weight: 400;
+}
+.wpcf7 span[data-name=your-email] input:not([type=checkbox]),
+.wpcf7 span[data-name=telephone] input:not([type=checkbox]),
+.wpcf7 span[data-name=full-address] input:not([type=checkbox]),
+.wpcf7 span[data-name=iban] input:not([type=checkbox]) {
+  padding: 9px 20px 9px 45px;
+}
+.wpcf7 .institution-field * + * {
+  margin-top: 20px;
+}
+.wpcf7 #institution-else,
+.wpcf7 #institution-else + * {
+  display: none;
+}
+.wpcf7 #institution-else .wpcf7-form-control-wrap {
+  margin-top: 6px;
+}
+.wpcf7 [data-institution-else-visible=true] #institution-else,
+.wpcf7 [data-institution-else-visible=true] #institution-else + * {
+  display: block;
+}
+.wpcf7 input.wpcf7-not-valid {
+  border-color: #ff5757;
+}
+.wpcf7 .wpcf7-not-valid-tip {
+  color: #ff5757;
+  font-size: 14px;
+  margin-top: 10px;
+}
+@media screen and (max-width: 700px) {
+  .wpcf7 form > p {
+    display: block;
+    border: none;
+    padding: 0;
+  }
+  .wpcf7 form > p + p,
+  .wpcf7 form > p span + span {
+    display: block;
+    margin-top: 1rem;
+  }
+  .wpcf7 form > p > label {
+    display: block;
+    margin-bottom: 6px;
+  }
 }
 
 /*
