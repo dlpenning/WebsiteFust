@@ -108,6 +108,25 @@ Section: News
 /*
 Section: Input form
 */
+input:not([type=checkbox]):not([type=submit]), select {
+  width: 100%;
+  height: auto;
+  padding: 9px 20px;
+  border-radius: 6px;
+  border: 1px solid #D1D5D8;
+  outline-color: var(--color-pink);
+  transition: border 100ms;
+}
+input:not([type=checkbox]):not([type=submit])::-moz-placeholder, select::-moz-placeholder {
+  color: #aaa;
+}
+input:not([type=checkbox]):not([type=submit])::placeholder, select::placeholder {
+  color: #aaa;
+}
+input:not([type=checkbox]):not([type=submit]):hover, input:not([type=checkbox]):not([type=submit]):focus, select:hover, select:focus {
+  border-color: var(--color-pink);
+}
+
 .wpcf7 {
   margin-top: 0.6em;
 }
@@ -132,24 +151,6 @@ Section: Input form
 .wpcf7 form > p > * label {
   display: inline-block;
   margin-bottom: 10px;
-}
-.wpcf7 input:not([type=checkbox]):not([type=submit]), .wpcf7 select {
-  width: 100%;
-  height: auto;
-  padding: 9px 20px;
-  border-radius: 6px;
-  border: 1px solid #D1D5D8;
-  outline-color: var(--color-pink);
-  transition: border 100ms;
-}
-.wpcf7 input:not([type=checkbox]):not([type=submit])::-moz-placeholder, .wpcf7 select::-moz-placeholder {
-  color: #aaa;
-}
-.wpcf7 input:not([type=checkbox]):not([type=submit])::placeholder, .wpcf7 select::placeholder {
-  color: #aaa;
-}
-.wpcf7 input:not([type=checkbox]):not([type=submit]):hover, .wpcf7 input:not([type=checkbox]):not([type=submit]):focus, .wpcf7 select:hover, .wpcf7 select:focus {
-  border-color: var(--color-pink);
 }
 .wpcf7 select {
   background-color: #fff;

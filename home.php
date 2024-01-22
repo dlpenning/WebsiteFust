@@ -48,8 +48,8 @@ $top_services = array_slice($services, 0, 4);
     <div class="section-divider"></div>
     <section>
         <div class="section-content">
-            <h1 class="title section-title">Services</h1>
-            <p>We provide a number of (digital) services exclusively for our members. Check out our top services below!</p>
+            <h1 class="title section-title">Member benefits</h1>
+            <p>We provide a number of (digital) exclusive member benefits. Check out our most popular ones below!</p>
 
             <div class="services-grid section-container">
 
@@ -67,7 +67,7 @@ $top_services = array_slice($services, 0, 4);
                 </a>
             <?php } ?>
             </div>
-            <a href="/services" class="button primary">View all services</a>
+            <a href="/services" class="button primary">View all member benefits</a>
         </div>
     </section>
 </main>

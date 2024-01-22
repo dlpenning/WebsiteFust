@@ -297,6 +297,52 @@ Component: Services grid
 }
 
 /*
+Component: No access card
+*/
+.no-access-card {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: 2rem;
+  padding: 4rem 8rem;
+  border-radius: 12px;
+  background-color: var(--color-purple);
+  color: #fff;
+  gap: 4rem;
+}
+.no-access-card-content-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+.no-access-card-content-wrapper * + * {
+  margin-top: 1rem;
+}
+.no-access-card img {
+  width: 300px;
+}
+
+@media screen and (max-width: 1300px) {
+  .no-access-card {
+    padding: 4rem;
+  }
+}
+@media screen and (max-width: 900px) {
+  .no-access-card img {
+    width: 250px;
+  }
+}
+@media screen and (max-width: 750px) {
+  .no-access-card {
+    flex-direction: column;
+  }
+  .no-access-card-img-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+/*
 Component: Footer
 */
 footer.app-footer {

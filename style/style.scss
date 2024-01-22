@@ -132,6 +132,21 @@ Section: News
 /*
 Section: Input form
 */
+input:not([type=checkbox]):not([type=submit]), select {
+  width: 100%;
+  height: auto;
+  padding: 9px 20px;
+  border-radius: 6px;
+  border: 1px solid #D1D5D8;
+  outline-color: var(--color-pink);
+  transition: border 100ms;
+  
+  &::placeholder { color: #aaa; }
+
+  &:hover, &:focus {
+    border-color: var(--color-pink);
+  }
+}
 
 .wpcf7 {
   margin-top: 0.6em;
@@ -161,22 +176,6 @@ Section: Input form
     & > * label {
       display: inline-block;
       margin-bottom: 10px;
-    }
-  }
-
-  input:not([type=checkbox]):not([type=submit]), select {
-    width: 100%;
-    height: auto;
-    padding: 9px 20px;
-    border-radius: 6px;
-    border: 1px solid #D1D5D8;
-    outline-color: var(--color-pink);
-    transition: border 100ms;
-    
-    &::placeholder { color: #aaa; }
-
-    &:hover, &:focus {
-      border-color: var(--color-pink);
     }
   }
 
