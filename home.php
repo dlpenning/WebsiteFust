@@ -51,6 +51,8 @@ $top_services = array_slice($services, 0, 4);
             <h1 class="title section-title">Member benefits</h1>
             <p>We provide a number of (digital) exclusive member benefits. Check out our most popular ones below!</p>
 
+            <?php if (is_user_logged_in()) { ?>
+
             <div class="services-grid section-container">
 
             <?php foreach ($top_services as $service) { ?>
@@ -66,7 +68,25 @@ $top_services = array_slice($services, 0, 4);
                     </div>
                 </a>
             <?php } ?>
+
             </div>
+
+            <?php } else { ?>
+
+            <div class="no-access-card">
+                <div class="no-access-card-img-wrapper">
+                    <img src="<?= get_template_directory_uri(); ?>/img/undraw_access_denied.svg" alt="">
+                </div>
+                <div class="no-access-card-content-wrapper">
+                    <div>
+                        <i class="fas fa-lock fa-4x"></i>
+                        <h1 class="title">Access denied</h1>
+                        <p><i>You have to be logged in to view our member benefits. Become a member now to create your account!</i></p>
+                        <a href="/become-a-member" class="button outline white">Join us now</a>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
             <a href="/services" class="button primary">View all member benefits</a>
         </div>
     </section>

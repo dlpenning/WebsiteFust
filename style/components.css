@@ -355,7 +355,7 @@ Component: No access card
 .no-access-card {
   display: flex;
   flex-direction: row-reverse;
-  margin-top: 2rem;
+  margin: 2rem 0;
   padding: 4rem 8rem;
   border-radius: 12px;
   background-color: var(--color-purple);
@@ -388,6 +388,7 @@ Component: No access card
 @media screen and (max-width: 750px) {
   .no-access-card {
     flex-direction: column;
+    padding: 3rem;
   }
   .no-access-card-img-wrapper {
     display: flex;
