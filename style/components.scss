@@ -74,16 +74,73 @@ header.app-header {
           padding: 0;
         }
 
+        & div > ul > li {
+          height: 64px;
+        }
+
         li {
           list-style: none;
-          display: inline-block;
 
-          &.current-menu-item a {
+          a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+          }
+
+          &.current-menu-item > a {
             color: var(--color-purple);
           }
 
-          &:hover a {
+          &:hover > a {
             color: var(--color-pink);
+          }
+        }
+
+        li.menu-item-has-children {
+          position: relative;
+
+          & > a::after {
+            content: '\f078';
+            margin-left: 8px;
+            font-size: 12px;
+            font-family: 'Font Awesome 5 Free';
+          }
+        
+
+          &:hover ul.sub-menu {
+            display: block;
+          }
+
+          ul.sub-menu {
+            --radius-submenu: 6px;
+            position: absolute;
+            display: none;
+            left: 50%;
+            top: calc(100% - 8px);
+            transform: translateX(-50%);
+            list-style: none;
+            border-radius: 0;
+            z-index: 5;
+            box-shadow: 0 5px 20px rgba(146, 113, 172, 0.25);
+            border-radius: var(--radius-submenu);
+
+            li:first-child a {
+              border-radius: var(--radius-submenu) var(--radius-submenu) 0 0;
+            }
+
+            li:last-child a {
+              border-radius: 0 0 var(--radius-submenu) var(--radius-submenu);
+            }
+
+            a {
+              padding: 16px 3rem;
+              background-color: #fff;
+
+              &:hover {
+                background-color: #f7f8fa;
+              }
+            }
           }
         }
       }
@@ -152,6 +209,15 @@ header.app-header {
             margin: 0;
           }
 
+          ul.sub-menu {
+            margin: 1rem 0 2rem;
+
+            a {
+              font-size: 24px;
+              margin-left: 1rem;
+            }
+          }
+
           li {
             padding: 0;
             margin: 0;
@@ -164,7 +230,7 @@ header.app-header {
 
           a {
             color: #fff;
-            font-size: 36px;
+            font-size: 32px;
           }
         }
 

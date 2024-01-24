@@ -66,15 +66,61 @@ header.app-header .main-navbar .main-navbar-inner nav ul {
   gap: 32px;
   padding: 0;
 }
+header.app-header .main-navbar .main-navbar-inner nav div > ul > li {
+  height: 64px;
+}
 header.app-header .main-navbar .main-navbar-inner nav li {
   list-style: none;
-  display: inline-block;
 }
-header.app-header .main-navbar .main-navbar-inner nav li.current-menu-item a {
+header.app-header .main-navbar .main-navbar-inner nav li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+header.app-header .main-navbar .main-navbar-inner nav li.current-menu-item > a {
   color: var(--color-purple);
 }
-header.app-header .main-navbar .main-navbar-inner nav li:hover a {
+header.app-header .main-navbar .main-navbar-inner nav li:hover > a {
   color: var(--color-pink);
+}
+header.app-header .main-navbar .main-navbar-inner nav li.menu-item-has-children {
+  position: relative;
+}
+header.app-header .main-navbar .main-navbar-inner nav li.menu-item-has-children > a::after {
+  content: "\f078";
+  margin-left: 8px;
+  font-size: 12px;
+  font-family: "Font Awesome 5 Free";
+}
+header.app-header .main-navbar .main-navbar-inner nav li.menu-item-has-children:hover ul.sub-menu {
+  display: block;
+}
+header.app-header .main-navbar .main-navbar-inner nav li.menu-item-has-children ul.sub-menu {
+  --radius-submenu: 6px;
+  position: absolute;
+  display: none;
+  left: 50%;
+  top: calc(100% - 8px);
+  transform: translateX(-50%);
+  list-style: none;
+  border-radius: 0;
+  z-index: 5;
+  box-shadow: 0 5px 20px rgba(146, 113, 172, 0.25);
+  border-radius: var(--radius-submenu);
+}
+header.app-header .main-navbar .main-navbar-inner nav li.menu-item-has-children ul.sub-menu li:first-child a {
+  border-radius: var(--radius-submenu) var(--radius-submenu) 0 0;
+}
+header.app-header .main-navbar .main-navbar-inner nav li.menu-item-has-children ul.sub-menu li:last-child a {
+  border-radius: 0 0 var(--radius-submenu) var(--radius-submenu);
+}
+header.app-header .main-navbar .main-navbar-inner nav li.menu-item-has-children ul.sub-menu a {
+  padding: 16px 3rem;
+  background-color: #fff;
+}
+header.app-header .main-navbar .main-navbar-inner nav li.menu-item-has-children ul.sub-menu a:hover {
+  background-color: #f7f8fa;
 }
 header.app-header .main-navbar .main-navbar-inner .right-nav {
   display: flex;
@@ -137,6 +183,13 @@ header.app-header .main-navbar .main-navbar-inner .right-nav svg {
     padding: 0;
     margin: 0;
   }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container ul.sub-menu {
+    margin: 1rem 0 2rem;
+  }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container ul.sub-menu a {
+    font-size: 24px;
+    margin-left: 1rem;
+  }
   header.app-header .main-navbar .nav-screen .menu-fust-app-header-container li {
     padding: 0;
     margin: 0;
@@ -147,7 +200,7 @@ header.app-header .main-navbar .main-navbar-inner .right-nav svg {
   }
   header.app-header .main-navbar .nav-screen .menu-fust-app-header-container a {
     color: #fff;
-    font-size: 36px;
+    font-size: 32px;
   }
   header.app-header .main-navbar .nav-screen .button {
     display: block;
