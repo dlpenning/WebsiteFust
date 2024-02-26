@@ -10,7 +10,7 @@ define('FUST_THEME_DIR', get_template_directory());
 
 class FUST
 {
-    public static $post_types = ['FUST_News', 'FUST_Service'];
+    public static $post_types = ['FUST_News', 'FUST_Service', 'FUST_Activity'];
 
     /**
      * Initialize the theme features

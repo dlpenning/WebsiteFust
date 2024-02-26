@@ -473,4 +473,175 @@ Component: Highlight
   background-color: var(--color-yellow);
   font-weight: 600;
   z-index: -1;
+}
+
+/*
+Component: Calendar
+*/
+.activity-overview {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.activity-overview .activity-list {
+  flex: 1;
+}
+
+.container-wrapper {
+  background-color: var(--color-purple);
+  border-radius: 12px;
+  color: white;
+}
+.container-wrapper + .container-wrapper {
+  margin-top: 1rem;
+}
+
+.calendar {
+  position: sticky;
+  top: 1rem;
+  margin: 0;
+  color: #fff;
+  border-radius: 6px;
+  background-color: var(--color-pink);
+  z-index: 1;
+}
+.calendar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  z-index: 0;
+}
+.calendar > * {
+  position: relative;
+  z-index: 1;
+}
+.calendar .action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem 0.5rem;
+}
+.calendar .action-bar .calendar-label {
+  font: bold 18px var(--font-family-header);
+}
+.calendar .action-bar .prev, .calendar .action-bar .next {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background-color: var(--color-purple);
+  border-radius: 100px;
+  cursor: pointer;
+}
+.calendar .action-bar .next {
+  margin-left: 4px;
+}
+.calendar-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-items: center;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
+  opacity: 0.7;
+  font-weight: bold;
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-items: center;
+  padding: 0 2rem 2rem;
+}
+.calendar-grid > div {
+  position: relative;
+  transition: all 300ms ease;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+.calendar-grid > div span {
+  position: relative;
+  z-index: 2;
+}
+.calendar-grid > div.other-month {
+  opacity: 0.4;
+}
+.calendar-grid > div .activity-indicators {
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  z-index: 3;
+}
+.calendar-grid > div .activity-indicators > * {
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-purple);
+  border-radius: 100px;
+  transition: background-color 200ms ease;
+}
+.calendar-grid > div.selected .activity-indicators > * {
+  background-color: #fff;
+}
+.calendar-grid > div.today::before {
+  content: "";
+  --size-offset: 0px;
+  position: absolute;
+  left: var(--size-offset);
+  right: var(--size-offset);
+  top: var(--size-offset);
+  bottom: var(--size-offset);
+  border-radius: 6px;
+  background-color: var(--color-purple);
+  z-index: 2;
+  opacity: 1;
+}
+.calendar-grid > div::after {
+  content: "";
+  --size-offset: 0px;
+  position: absolute;
+  left: var(--size-offset);
+  right: var(--size-offset);
+  top: var(--size-offset);
+  bottom: var(--size-offset);
+  border-radius: 6px;
+  background-color: #fff;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 200ms ease, background-color 200ms ease;
+}
+.calendar-grid > div.selected::after {
+  opacity: 0.2;
+}
+.calendar-grid > div.today::after {
+  border-radius: 6px;
+}
+
+@media only screen and (max-width: 500px) {
+  .calendar {
+    width: 100%;
+  }
+  .calendar .calendar-grid > div {
+    height: 45px;
+  }
+  .calendar .calendar-grid > div.active::after {
+    height: 3px;
+    bottom: 4px;
+  }
+  .calendar-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .sidebar {
+    padding: 1rem 2rem;
+  }
 }/*# sourceMappingURL=components.css.map */

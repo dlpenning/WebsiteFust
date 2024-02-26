@@ -351,6 +351,58 @@ Section: Login
   border-radius: 6px;
 }
 
+/*
+Section: Activities
+*/
+.activity-tags {
+  display: flex;
+  gap: 1rem;
+}
+.activity-tags span {
+  display: inline-block;
+  color: #fff;
+  background-color: var(--color-yellow);
+  padding: 4px 20px;
+  border-radius: 100px;
+}
+
+.activity > .section-content {
+  display: flex;
+  gap: 2rem;
+}
+.activity > .section-content .activity-details {
+  flex: 1;
+}
+.activity > .section-content .activity-metadata {
+  min-width: 400px;
+  padding: 2rem;
+  background-color: var(--color-purple);
+  color: #fff;
+  border-radius: 8px;
+}
+.activity > .section-content .activity-metadata h3 {
+  font-size: 24px;
+  margin-bottom: 1.5rem;
+}
+.activity > .section-content .activity-metadata ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+.activity > .section-content .activity-metadata ul li + li {
+  margin-top: 12px;
+}
+.activity > .section-content .activity-metadata .icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: var(--color-pink);
+  border-radius: 100px;
+  margin-right: 8px;
+}
+
 @media screen and (max-width: 1000px) {
   .fust-login {
     grid-template-columns: 1fr;

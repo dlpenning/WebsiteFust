@@ -6,6 +6,7 @@ define('FUST_THEME_DIR', get_template_directory());
 include FUST_THEME_DIR . '/includes/class-fust.php';
 include FUST_THEME_DIR . '/includes/post_types/class.news.php';
 include FUST_THEME_DIR . '/includes/post_types/class.service.php';
+include FUST_THEME_DIR . '/includes/post_types/class.activity.php';
 
 FUST::hooks();
 
@@ -58,6 +59,7 @@ add_action('init', 'add_fust_app_header');
 add_action('wp_enqueue_scripts', 'add_fust_stylesheets');
 add_action('init', ['FUST_News', 'setup']);
 add_action('init', ['FUST_Service', 'setup']);
+add_action('init', ['FUST_Activity', 'setup']);
 
 add_action('admin_menu', 'post_remove');
 
@@ -190,6 +192,15 @@ function service_get_the_icon($post) {
     }
 
     return 'fa-calculator';
+}
+
+function fust_get_activities() {
+    // Setup activity query
+    $activity_query = new WP_Query( [
+        'post_type' => 'activity'
+    ]);
+
+    return $activity_query->posts;
 }
 
 
