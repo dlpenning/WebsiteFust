@@ -45,13 +45,34 @@ input, textarea {
   color: var(--text-color-dark);
 }
 
+a.link {
+  color: var(--color-purple);
+  text-decoration: none;
+
+  &.white {
+    color: white;
+  }
+}
+
 article {
-  color: var(--text-color-body);
   margin-top: 20px;
   
   p {
     line-height: 1.75;
     margin-bottom: 8px;
+  }
+
+  summary {
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  details > * {
+    margin-left: 2rem;
+  }
+
+  details > summary {
+    margin-left: 0;
   }
 }
 
@@ -76,6 +97,11 @@ article {
   font-size: 1.2rem;
 }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* Sections */
 section {

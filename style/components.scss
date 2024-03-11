@@ -78,7 +78,7 @@ header.app-header {
           height: 64px;
         }
 
-        li {
+        .menu-item {
           list-style: none;
 
           a {
@@ -97,7 +97,8 @@ header.app-header {
           }
         }
 
-        li.menu-item-has-children {
+        // First submenu level
+        .menu-item.menu-item-has-children {
           position: relative;
 
           & > a::after {
@@ -108,11 +109,30 @@ header.app-header {
           }
         
 
-          &:hover ul.sub-menu {
+          &:hover > .sub-menu {
             display: block;
           }
 
-          ul.sub-menu {
+          // Second + submenu level
+          .menu-item.menu-item-has-children {
+            //position: static;
+
+            & > a::after {
+              content: '\f054';
+              margin-left: 8px;
+              font-size: 12px;
+              font-family: 'Font Awesome 5 Free';
+            }
+
+            & > .sub-menu {
+              position: absolute;
+              left: 100%;
+              top: 0;
+              transform: none;
+            }
+          }
+
+          .sub-menu {
             --radius-submenu: 6px;
             position: absolute;
             display: none;
@@ -124,18 +144,20 @@ header.app-header {
             z-index: 5;
             box-shadow: 0 5px 20px rgba(146, 113, 172, 0.25);
             border-radius: var(--radius-submenu);
+            width: 200px;
 
-            li:first-child a {
+            & > .menu-item:first-child > a {
               border-radius: var(--radius-submenu) var(--radius-submenu) 0 0;
             }
 
-            li:last-child a {
+            & > .menu-item:last-child > a {
               border-radius: 0 0 var(--radius-submenu) var(--radius-submenu);
             }
 
             a {
               padding: 16px 3rem;
               background-color: #fff;
+              text-align: center;
 
               &:hover {
                 background-color: #f7f8fa;
@@ -211,10 +233,10 @@ header.app-header {
 
           ul.sub-menu {
             margin: 1rem 0 2rem;
+            margin-left: 1rem;
 
             a {
               font-size: 24px;
-              margin-left: 1rem;
             }
           }
 
@@ -491,7 +513,7 @@ footer.app-footer {
 
 /*
 Component: Button
-*/
+*/        
 .button {
   display: inline-block;
   padding: 8px 24px;
@@ -559,18 +581,50 @@ Component: Calendar
 
   .activity-list {
     flex: 1;
+
+    &-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 3rem;
+      background-color: var(--color-purple);
+      color: white;
+      border-radius: 12px;
+
+      & + .activity-list-item {
+        margin-top: 1rem;
+      }
+
+      &-inner {
+        flex-shrink: 1;
+      }
+
+      &-inner > * + * {
+        margin-top: 12px;
+      }
+
+      &-left {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 100px;
+        width: 120px;
+        border-radius: 4px;
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      &-subtitle {
+        width: calc(100%);
+      }
+    }
+
+    .title {
+      font-size: 32px;
+    }
   }
-}
-
-.container-wrapper {
-  background-color: var(--color-purple);
-  border-radius: 12px;
-
-  & + .container-wrapper {
-    margin-top: 1rem;
-  }
-
-  color: white;
 }
 
 .calendar {

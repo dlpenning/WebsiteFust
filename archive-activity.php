@@ -1,36 +1,16 @@
 <?php 
 fust_set_title('Activities');
 
-$activities = array(
-    0 => [
-        'title' => 'Test activity 1',
-        'date' => '2024-02-28',
-    ],
-    1 => [
-        'title' => 'Test activity 2',
-        'date' => '2024-02-28',
-    ],
-    2 => [
-        'title' => 'Test activity 3',
-        'date' => '2024-03-02',
-    ],
-    3 => [
-        'title' => 'Test activity 4',
-        'date' => '2024-03-03',
-    ],
-    4 => [
-        'title' => 'Test activity 5',
-        'date' => '2024-03-04',
-    ],
-    5 => [
-        'title' => 'Test activity 6',
-        'date' => '2024-03-08',
-    ],
-    6 => [
-        'title' => 'Test activity 7',
-        'date' => '2024-03-10',
-    ],
-)
+function render_activity_time($id) {
+    $start_hours = str_pad(get_post_meta($id, 'start_hours', true), 2, '0');
+    $start_minutes = str_pad(get_post_meta($id, 'start_minutes', true), 2, '0');
+    $end_hours = str_pad(get_post_meta($id, 'end_hours', true), 2, '0');
+    $end_minutes = str_pad(get_post_meta($id, 'end_minutes', true), 2, '0');
+
+    return $start_hours . ':' . $start_minutes . ' - ' . $end_hours . ':' . $end_minutes;
+}
+
+$activities = fust_get_activities();
 ?>
 
 <?= get_template_part('templates/header') ?>
@@ -43,14 +23,29 @@ $activities = array(
 
             <div class="activity-overview">
                 <div class="activity-list">
-                <?php foreach ($activities as $activity) { ?>
+                <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-                <section class="container-wrapper">
-                    <h1 class="title section-title"><?= $activity['title'] ?></h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius in sint sed tempora a totam, maxime numquam expedita laborum illum!</p>
-                </section>
+                    <section class="container-wrapper activity-list-item">
+                        <div class="activity-list-item-left">
+                            <h1><?= render_activity_time($post->ID) ?></h1>
+                            <p><?= get_post_meta($post->ID, 'date', true) ?></p>
+                        </div>
+                        <div class="activity-list-item-inner">
+                            <h1 class="title"><a class="link white" href="<?= service_get_the_custom_permalink($post) ?>"><?= get_the_title($p) ?></h1></a>
+                            <div class="activity-tags">
+                                <?php
+                                $tags = get_post_meta($post->ID, 'tags', true);
+                                $tags_array = FUST_Activity::parse_tags($tags);
 
-                <?php } ?>
+                                foreach ($tags_array as $tag) { ?>
+                                    <span><?= $tag ?></span>
+                                <?php } ?>
+                            </div>
+                            <p class="activity-list-item-subtitle truncate"><?= get_excerpt(100, $p) ?></p>
+                        </div>
+                    </section>
+
+                <?php endwhile; endif; ?>
                 </div>
 
                 <div class="activity-calendar calendar">
@@ -79,6 +74,8 @@ $activities = array(
 <script>
 const calendarData = <?= json_encode($activities) ?>
 
+console.log(calendarData)
+
 const cellClickListener = (cell) => {
     // Update selected grid item
     const currentActive = document.querySelector('.calendar-grid .selected')
@@ -92,13 +89,17 @@ const cellClickListener = (cell) => {
 
 function selectDate(date) {
     const dateElement = document.querySelector(`[data-date='${date.toLocaleDateString('nl-NL')}']`)
-    cellClickListener(dateElement)
+    if (dateElement) {
+        cellClickListener(dateElement)
+    }
 }
 
 function checkDateMatch(date1, date2) {
-  return date1.getDate() == date2.getDate() &&
-    date1.getMonth() == date2.getMonth() &&
-    date1.getFullYear() == date2.getFullYear()
+    console.log(date1)
+    console.log(date2)
+    return date1.getDate() == date2.getDate() &&
+        date1.getMonth() == date2.getMonth() &&
+        date1.getFullYear() == date2.getFullYear()
 }
 
 function initCalendar() {

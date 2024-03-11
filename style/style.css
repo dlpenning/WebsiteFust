@@ -356,13 +356,14 @@ Section: Activities
 */
 .activity-tags {
   display: flex;
-  gap: 1rem;
+  gap: 10px;
 }
 .activity-tags span {
+  font-size: 14px;
   display: inline-block;
   color: #fff;
   background-color: var(--color-yellow);
-  padding: 4px 20px;
+  padding: 4px 14px;
   border-radius: 100px;
 }
 

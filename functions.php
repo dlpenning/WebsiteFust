@@ -64,6 +64,24 @@ add_action('init', ['FUST_Activity', 'setup']);
 add_action('admin_menu', 'post_remove');
 
 
+function load_scripts() {
+    wp_register_script('jquery', get_template_directory_uri() . '/js/jquery-3.5.0.min.js', '', 1, true);
+    wp_enqueue_script('jquery');
+
+    wp_enqueue_script('jquery_datetime', get_template_directory_uri() . '/js/jquery-datetime.js');
+    wp_register_style('datetimepicker_css', get_template_directory_uri() . '/style/jquery.datetimepicker.min.css');
+    wp_enqueue_style('datetimepicker_css');
+}
+
+function add_admin_scripts() {
+    wp_enqueue_script('util', get_template_directory_uri() . '/js/util.js');
+    wp_enqueue_script('admin', get_template_directory_uri() . '/js/admin.js');
+}
+
+add_action('wp_enqueue_scripts', 'load_scripts');
+add_action('admin_enqueue_scripts', 'add_admin_scripts');
+
+
 /**
  * Definition of custom logged-in user experience (logic)
  */
@@ -196,11 +214,21 @@ function service_get_the_icon($post) {
 
 function fust_get_activities() {
     // Setup activity query
-    $activity_query = new WP_Query( [
+    $activity_query = new WP_Query([
         'post_type' => 'activity'
     ]);
 
     return $activity_query->posts;
+}
+
+function activity_get_the_date($post) {
+    $date = get_post_meta($post->ID, 'date', true);
+
+    if ($date) {
+        return $date;
+    }
+
+    return '';
 }
 
 

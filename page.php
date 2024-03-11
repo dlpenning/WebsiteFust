@@ -6,7 +6,7 @@ fust_set_title(the_title('', '', false));
 
 <main role="main">
   <section class="reduced-top-space">
-    <div class="section-content">
+    <article class="section-content">
       <h1 class="title section-title"><?= the_title() ?></h1>
       <p><?= the_content() ?></p>
     </div>

@@ -61,6 +61,7 @@ class FUST
         add_action('init', ['FUST', 'init']);
         add_action('add_meta_boxes', ['FUST', 'add_meta_boxes']);
         add_action('save_post', ['FUST', 'save_post']);
+        //add_action('enqueue_scripts', ['FUST', 'enqueue_scripts']);
 
         // Add the FUST admin page
         add_action('admin_menu', function() {
