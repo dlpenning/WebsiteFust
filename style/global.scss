@@ -103,6 +103,18 @@ article {
   text-overflow: ellipsis;
 }
 
+.alignright {
+    float: right;
+    margin: 1rem;
+    margin-right: 0;
+}
+
+.alignleft {
+    float: left;
+    margin: 1rem;
+    margin-left: 0;
+}
+
 /* Sections */
 section {
   position: relative;
