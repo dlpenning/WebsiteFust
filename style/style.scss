@@ -1,7 +1,7 @@
 /*
 Section: Masthead
 */
-.masthead {
+section.masthead {
   background-color: var(--color-purple);
   color: #fff;
   padding: 8rem var(--padding-body-horizontal);
@@ -412,6 +412,7 @@ Section: Activities
 */
 .activity-tags {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
 
     span {
@@ -426,6 +427,7 @@ Section: Activities
 
 .activity > .section-content {
     display: flex;
+    align-items: flex-start;
     gap: 2rem;
 
     .activity-details {
@@ -433,7 +435,7 @@ Section: Activities
     }
 
     .activity-metadata {
-        min-width: 400px;
+        width: 400px;
         padding: 2rem;
         background-color: var(--color-purple);
         color: #fff;
@@ -461,6 +463,17 @@ Section: Activities
             background-color: var(--color-pink);
             border-radius: 100px;
             margin-right: 8px;
+        }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .activity > .section-content {
+        display: block;
+
+        .activity-metadata {
+            margin-top: 1.5rem;
+            width: 100%;
         }
     }
 }

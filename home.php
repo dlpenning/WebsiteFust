@@ -45,7 +45,7 @@ $top_services = array_slice($services, 0, 4);
             </div>
         </div>
     </section>
-    <div class="section-divider"></div>
+    <!-- <div class="section-divider"></div> -->
     <section>
         <div class="section-content">
             <h1 class="title section-title">Member benefits</h1>
@@ -88,6 +88,33 @@ $top_services = array_slice($services, 0, 4);
             </div>
             <?php } ?>
             <a href="/services" class="button primary">View all member benefits</a>
+        </div>
+    </section>
+    <!-- <div class="section-divider"></div> -->
+    <section class="centered">
+        <div class="section-content">
+            <h1 class="title section-title">Partners</h1>
+            
+            <div class="partner-grid">
+                <div class="partner-grid-item">
+                    <div class="logo">
+                        <img src="<?= get_template_directory_uri(); ?>/img/sam.png" alt="">
+                    </div>
+                    <div class="content">
+                        <h2>Student Party SAM</h2>
+                        <p>Student Party SAM is the oldest student party of Tilburg university. Student Party SAM establishes an encouraging student climate in which all students can achieve their ambitions.</p>
+                    </div>
+                </div>
+                <div class="partner-grid-item">
+                    <div class="logo">
+                        <img src="<?= get_template_directory_uri(); ?>/img/magister.png" alt="">
+                    </div>
+                    <div class="content">
+                        <h2>Magister JFT</h2>
+                        <p>Magister JFT is the Legal Faculty Association of Tilburg Law School, and organises career, social, as well as study related events for all her members.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </main>

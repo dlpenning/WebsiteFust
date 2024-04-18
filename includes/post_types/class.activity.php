@@ -57,6 +57,38 @@ class FUST_Activity
         return $tagsArray;
     }
 
+    public static function formatLocaleDate($date, $lang) {
+        // Convert input date string to DateTime object
+        $dateTime = DateTime::createFromFormat('d/m/Y', $date);
+        
+        // Set locale based on input parameter $lang
+        $locale = ($lang == 'nl') ? 'nl_NL' : 'en_US';
+        
+        // Create IntlDateFormatter object
+        $formatter = new IntlDateFormatter($locale, IntlDateFormatter::LONG, IntlDateFormatter::NONE);
+        
+        // Format the date
+        $formattedDate = $formatter->format($dateTime);
+        
+        return $formattedDate;
+    }
+
+    public static function formatDateTimeIso($date, $hour, $minute) {
+        // Convert input date string to DateTime object with specified format
+        $dateTime = DateTime::createFromFormat('d/m/Y', $date, new DateTimeZone('Europe/Amsterdam'));
+        
+        // Set hour and minute in Europe/Amsterdam timezone
+        $dateTime->setTime($hour, $minute);
+        
+        // Convert the datetime to UTC timezone
+        $dateTime->setTimezone(new DateTimeZone('UTC'));
+        
+        // Format the date in the specified format
+        $formattedDateTime = $dateTime->format('Ymd\THis\Z');
+        
+        return $formattedDateTime;
+    }
+
     /**
 	 * The metabox containing the event data, the date
 	 * 

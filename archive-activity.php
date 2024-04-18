@@ -2,12 +2,12 @@
 fust_set_title('Activities');
 
 function render_activity_time($id) {
-    $start_hours = str_pad(get_post_meta($id, 'start_hours', true), 2, '0');
-    $start_minutes = str_pad(get_post_meta($id, 'start_minutes', true), 2, '0');
-    $end_hours = str_pad(get_post_meta($id, 'end_hours', true), 2, '0');
-    $end_minutes = str_pad(get_post_meta($id, 'end_minutes', true), 2, '0');
+    $start_hours = get_post_meta($id, 'start_hours', true);
+    $start_minutes = get_post_meta($id, 'start_minutes', true);
+    $end_hours = get_post_meta($id, 'end_hours', true);
+    $end_minutes = get_post_meta($id, 'end_minutes', true);
 
-    return $start_hours . ':' . $start_minutes . ' - ' . $end_hours . ':' . $end_minutes;
+    return sprintf('%02d:%02d - %02d:%02d', $start_hours, $start_minutes, $end_hours, $end_minutes);
 }
 
 $activities = fust_get_activities();
@@ -23,15 +23,13 @@ $activities = fust_get_activities();
 
             <div class="activity-overview">
                 <div class="activity-list">
-                <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+                <?php if (have_posts()) {
+                    while (have_posts()) : the_post(); ?>
 
-                    <section class="container-wrapper activity-list-item">
-                        <div class="activity-list-item-left">
-                            <h1><?= render_activity_time($post->ID) ?></h1>
-                            <p><?= get_post_meta($post->ID, 'date', true) ?></p>
-                        </div>
-                        <div class="activity-list-item-inner">
-                            <h1 class="title"><a class="link white" href="<?= service_get_the_custom_permalink($post) ?>"><?= get_the_title($p) ?></h1></a>
+                        <div class="activity-list-item">
+                            <h1><a class="link white" href="<?= service_get_the_custom_permalink($post) ?>"><?= get_the_title($p) ?></h1></a>
+                            <p><?= FUST_Activity::formatLocaleDate(get_post_meta($post->ID, 'date', true), 'en') ?></p>
+                            <p class="meta"><?= render_activity_time($post->ID) ?></p>
                             <div class="activity-tags">
                                 <?php
                                 $tags = get_post_meta($post->ID, 'tags', true);
@@ -41,13 +39,16 @@ $activities = fust_get_activities();
                                     <span><?= $tag ?></span>
                                 <?php } ?>
                             </div>
-                            <p class="activity-list-item-subtitle truncate"><?= get_excerpt(100, $p) ?></p>
-                        </div>
-                    </section>
+                            <p class="activity-list-item-subtitle"><?= get_excerpt(100, $p) ?></p>
+                        </section>
 
-                <?php endwhile; endif; ?>
+                    <?php endwhile;
+                } else {
+                    echo 'No activities planned currently, please come back later!';
+                } ?>
                 </div>
 
+                <?php /*
                 <div class="activity-calendar calendar">
                     <header class="action-bar">
                         <span class="calendar-label" id="activity-calendar-month-label">January 2024</span>
@@ -67,14 +68,14 @@ $activities = fust_get_activities();
                     </div> 
                     <div class="calendar-grid" id="activity-calendar-grid"></div>
                 </div>
+                */ ?>
             </div>
     </section>
 </main>
 
+<?php /*
 <script>
 const calendarData = <?= json_encode($activities) ?>
-
-console.log(calendarData)
 
 const cellClickListener = (cell) => {
     // Update selected grid item
@@ -88,7 +89,7 @@ const cellClickListener = (cell) => {
 }
 
 function selectDate(date) {
-    const dateElement = document.querySelector(`[data-date='${date.toLocaleDateString('nl-NL')}']`)
+    const dateElement = document.querySelector(`[data-date='${date.toLocaleDateString('en-GB')}']`)
     if (dateElement) {
         cellClickListener(dateElement)
     }
@@ -144,7 +145,7 @@ function initCalendar() {
     for (const date of dates) {
         const el = document.createElement("div")
 
-        el.setAttribute('data-date', date.date.toLocaleDateString('nl-NL'))
+        el.setAttribute('data-date', date.date.toLocaleDateString('en-GB'))
         el.addEventListener('click', () => cellClickListener(el))
 
         if (date.otherMonth) {
@@ -164,13 +165,13 @@ function initCalendar() {
     selectDate(new Date(calendarData[0].date))
 
     // Highlight today
-    const todayEl = document.querySelector(`[data-date='${new Date().toLocaleDateString('nl-NL')}']`)
+    const todayEl = document.querySelector(`[data-date='${new Date().toLocaleDateString('en-GB')}']`)
     todayEl.classList.add('today')
 }
 
 
 initCalendar()
-
 </script>
+*/ ?>
 
 <?= get_template_part('templates/footer') ?>

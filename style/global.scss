@@ -120,6 +120,10 @@ article {
 section {
   position: relative;
   padding: 4rem var(--padding-body-horizontal);
+
+  &:nth-child(odd):not(:first-child) {
+    background-color: #f8f9fa;
+  }
 }
 
 section.centered {
@@ -145,8 +149,10 @@ section h1.section-title {
 }
 
 .section-divider {
-  border-bottom: 1px solid #bebebe;
-  margin: 4rem auto;
+  border-bottom: 1px solid var(--color-pink-light);
+  margin: 2rem auto;
+  //max-width: 1300px;
+  width: 100%;
 }
 
 
