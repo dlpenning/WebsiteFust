@@ -10,15 +10,15 @@
                 <div>
                     <p><h3>Legal<span class="dot">.</span></h3></p>
                     <ul>
-                        <li><a href="#">Cookie policy</a></li>
-                        <li><a href="#">Privacy policy</a></li>
-                        <li><a href="#">Codes of conduct</a></li>
+                        <li><a href="https://fusttilburg.nl/cookie-policy/">Cookie policy</a></li>
+                        <li><a href="https://fusttilburg.nl/privacy-policy/">Privacy policy</a></li>
+                        <li><a href="https://fusttilburg.nl/code-of-conduct/">Code of conduct</a></li>
                     </ul>
                 </div>
                 <div>
                     <p><h3>Socials<span class="dot">.</span></h3></p>
                     <ul>
-                        <li><a href="#">Instagram</a></li>
+                        <li><a href="https://www.instagram.com/fust_tilburg/" target="_blank">Instagram</a></li>
                     </ul>
                 </div>
                 <div>

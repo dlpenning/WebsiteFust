@@ -101,7 +101,7 @@ $top_services = array_slice($services, 0, 4);
                         <img src="<?= get_template_directory_uri(); ?>/img/sam.png" alt="">
                     </div>
                     <div class="content">
-                        <h2>Student Party SAM</h2>
+                        <h2><a href="https://fractiesam.nl/" class="link no-color" target="_blank">Student Party SAM</a></h2>
                         <p>Student Party SAM is the oldest student party of Tilburg university. Student Party SAM establishes an encouraging student climate in which all students can achieve their ambitions.</p>
                     </div>
                 </div>
@@ -110,7 +110,7 @@ $top_services = array_slice($services, 0, 4);
                         <img src="<?= get_template_directory_uri(); ?>/img/magister.png" alt="">
                     </div>
                     <div class="content">
-                        <h2>Magister JFT</h2>
+                        <h2><a href="https://magisterjft.nl/" class="link no-color" target="_blank">Magister JFT</a></h2>
                         <p>Magister JFT is the Legal Faculty Association of Tilburg Law School, and organises career, social, as well as study related events for all her members.</p>
                     </div>
                 </div>

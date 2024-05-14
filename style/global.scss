@@ -53,6 +53,15 @@ a.link {
   &.white {
     color: white;
   }
+
+  &.no-color {
+    color: inherit;
+    transition: color 100ms ease;
+
+    &:hover {
+        color: var(--color-purple);
+    }
+  }
 }
 
 article {

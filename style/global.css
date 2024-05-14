@@ -52,6 +52,13 @@ a.link {
 a.link.white {
   color: white;
 }
+a.link.no-color {
+  color: inherit;
+  transition: color 100ms ease;
+}
+a.link.no-color:hover {
+  color: var(--color-purple);
+}
 
 article {
   margin-top: 20px;
