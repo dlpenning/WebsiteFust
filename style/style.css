@@ -168,11 +168,24 @@ input:not([type=checkbox]):not([type=submit]):hover, input:not([type=checkbox]):
   color: #fff;
   transition: background-color 200ms;
 }
+.wpcf7 input[type=submit].has-spinner {
+  width: auto !important;
+}
+.wpcf7 input[type=submit].has-spinner + * {
+  width: 24px !important;
+}
 .wpcf7 input[type=submit]:hover {
   background-color: var(--color-pink-light);
 }
+.wpcf7 input[type=submit][disabled] {
+  background-color: #aaa;
+}
 .wpcf7 input[type=submit]:not([disabled]) {
   cursor: pointer;
+}
+.wpcf7 .wpcf7-response-output {
+  padding: 0.6em 1em !important;
+  border-radius: 8px;
 }
 .wpcf7 form > p:nth-last-child(2),
 .wpcf7 form > p:nth-last-child(3) {

@@ -196,13 +196,31 @@ input:not([type=checkbox]):not([type=submit]), select {
     color: #fff;
     transition: background-color 200ms;
 
+    &.has-spinner {
+      width: auto !important;
+
+      & + * {
+        width: 24px !important;
+      }
+    }
+
     &:hover {
       background-color: var(--color-pink-light);
+    }
+    
+    &[disabled] {
+      background-color: #aaa;
     }
 
     &:not([disabled]) {
       cursor: pointer;
     }
+  }
+
+  // Error output box
+  .wpcf7-response-output {
+    padding: 0.6em 1em !important;
+    border-radius: 8px;
   }
 
   // Special styling for bottom rows (no bar, styling for checkbox)
