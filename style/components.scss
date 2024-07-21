@@ -192,9 +192,10 @@ header.app-header {
         width: 100%;
         background-color: var(--color-pink);
         color: #fff;
-        padding: 2.5rem;
+        padding: 1.5rem;
         z-index: 11;
         transition: left 200ms;
+        overflow-y: auto;
 
         &.open {
           left: 0;
@@ -223,7 +224,7 @@ header.app-header {
 
         .menu-fust-app-header-container {
           display: block;
-          margin-top: 4rem;
+          margin-top: 2rem;
 
           ul {
             display: block;
@@ -236,7 +237,7 @@ header.app-header {
             margin-left: 1rem;
 
             a {
-              font-size: 24px;
+              font-size: 1rem;
             }
           }
 
@@ -252,7 +253,7 @@ header.app-header {
 
           a {
             color: #fff;
-            font-size: 32px;
+            font-size: 1.5rem;
           }
         }
 
@@ -262,21 +263,19 @@ header.app-header {
           margin-top: 2rem;
           text-align: center;
           padding: 12px 0;
-          font-size: 24px;
+          font-size: 1rem;
           font-weight: 600;
           background-color: #fff;
           color: var(--color-pink) !important;
         }
 
         .nav-screen-socials {
-          position: absolute;
-          left: 0;
-          bottom: 2rem;
           width: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
           gap: 16px;
+          margin-top: 1rem;
 
           a {
             color: #fff;

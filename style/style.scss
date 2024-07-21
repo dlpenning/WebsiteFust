@@ -512,13 +512,14 @@ Section: Activities
       }
     }
   }
-  .masthead {
+  
+  section.masthead {
     padding: 3rem var(--padding-body-horizontal) 5rem;
-  }
 
-  .masthead .section-content {
-    flex-direction: column;
-    gap: 32px;
+    .section-content {
+      flex-direction: column;
+      gap: 32px;
+    }
   }
 
   .about-container {
@@ -557,7 +558,7 @@ Section: Activities
 }
 
 @media screen and (max-width: 480px) {
-  .masthead .section-contnet {
+  .masthead .section-content {
     gap: 24px;
   }
 }

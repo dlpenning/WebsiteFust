@@ -163,9 +163,10 @@ header.app-header .main-navbar .main-navbar-inner .right-nav svg {
     width: 100%;
     background-color: var(--color-pink);
     color: #fff;
-    padding: 2.5rem;
+    padding: 1.5rem;
     z-index: 11;
     transition: left 200ms;
+    overflow-y: auto;
   }
   header.app-header .main-navbar .nav-screen.open {
     left: 0;
@@ -190,7 +191,7 @@ header.app-header .main-navbar .main-navbar-inner .right-nav svg {
   }
   header.app-header .main-navbar .nav-screen .menu-fust-app-header-container {
     display: block;
-    margin-top: 4rem;
+    margin-top: 2rem;
   }
   header.app-header .main-navbar .nav-screen .menu-fust-app-header-container ul {
     display: block;
@@ -202,7 +203,7 @@ header.app-header .main-navbar .main-navbar-inner .right-nav svg {
     margin-left: 1rem;
   }
   header.app-header .main-navbar .nav-screen .menu-fust-app-header-container ul.sub-menu a {
-    font-size: 24px;
+    font-size: 1rem;
   }
   header.app-header .main-navbar .nav-screen .menu-fust-app-header-container li {
     padding: 0;
@@ -214,7 +215,7 @@ header.app-header .main-navbar .main-navbar-inner .right-nav svg {
   }
   header.app-header .main-navbar .nav-screen .menu-fust-app-header-container a {
     color: #fff;
-    font-size: 32px;
+    font-size: 1.5rem;
   }
   header.app-header .main-navbar .nav-screen .button {
     display: block;
@@ -222,20 +223,18 @@ header.app-header .main-navbar .main-navbar-inner .right-nav svg {
     margin-top: 2rem;
     text-align: center;
     padding: 12px 0;
-    font-size: 24px;
+    font-size: 1rem;
     font-weight: 600;
     background-color: #fff;
     color: var(--color-pink) !important;
   }
   header.app-header .main-navbar .nav-screen .nav-screen-socials {
-    position: absolute;
-    left: 0;
-    bottom: 2rem;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 16px;
+    margin-top: 1rem;
   }
   header.app-header .main-navbar .nav-screen .nav-screen-socials a {
     color: #fff;
