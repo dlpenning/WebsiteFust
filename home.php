@@ -93,7 +93,7 @@ $top_services = array_slice($services, 0, 4);
     <!-- <div class="section-divider"></div> -->
     <section class="centered">
         <div class="section-content">
-            <h1 class="title section-title">Partners</h1>
+            <h1 class="title section-title">Joined Associations</h1>
             
             <div class="partner-grid">
                 <div class="partner-grid-item">
