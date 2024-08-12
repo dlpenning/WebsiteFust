@@ -7,6 +7,9 @@ include FUST_THEME_DIR . '/includes/class-fust.php';
 include FUST_THEME_DIR . '/includes/post_types/class.news.php';
 include FUST_THEME_DIR . '/includes/post_types/class.service.php';
 include FUST_THEME_DIR . '/includes/post_types/class.activity.php';
+include FUST_THEME_DIR . '/includes/customizer/controls/seperator.php';
+include FUST_THEME_DIR . '/includes/class-fust-customizer.php';
+include FUST_THEME_DIR . '/includes/customizer/class-fust-page.php';
 
 FUST::hooks();
 
@@ -284,6 +287,54 @@ function validate_iban($iban) {
 }
 
 
+/**
+ * Customizer
+ */
+// Add page data
+global $registered_pages;
+$registered_pages = [];
+
+require_once FUST_THEME_DIR . '/includes/setup-pages.php';
+
+function get_this_page_controller()
+{
+    global $registered_pages;
+
+    foreach ($registered_pages as $page) {
+        
+        if( $page -> page_id == get_page_template_slug() )
+        {
+            return $page;
+        }
+        elseif( $page->page_id == "home" && is_front_page() )
+        {
+            return $page;
+        }
+
+    }
+
+    return null;
+
+}
+
+function get_component_controller( $id )
+{
+    global $registered_pages;
+
+    foreach ($registered_pages as $page) {
+        
+        if( $page -> page_id == $id ) return $page;
+
+    }
+
+    return null;
+}
+
+
+
+
+
+
 /* ------- Front-end formatting functions --------*/
 
 // Excerpt length limiter
@@ -321,3 +372,19 @@ function reading_time() {
 
     return $totalreadingtime;
 }
+
+
+// Adds page data to the customizer
+function fust_add_page( $page_template_file, $page_unique_id, $display_name, $components, $check_function = null )
+{
+    $page = new FUST_Customizer_Page( $page_template_file, $page_unique_id, $display_name, $check_function );
+    $page->default_sections = $components;
+    return $page;
+}
+
+
+
+// Increase upload size
+@ini_set( 'upload_max_size' , '256M' );
+@ini_set( 'post_max_size', '256M');
+@ini_set( 'max_execution_time', '300' );

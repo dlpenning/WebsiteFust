@@ -1,5 +1,10 @@
 <?php
+/*
+Template Name: Home page
+*/
 fust_set_title('Homepage');
+
+add_action('customize_register', array( 'FUST_Home_Page', 'setup_customizer' ));
 
 $services = fust_get_services();
 $top_services = array_slice($services, 0, 4);
@@ -8,26 +13,13 @@ $top_services = array_slice($services, 0, 4);
 <?= get_template_part('templates/header') ?>
 
 <main role="main">
-    <section class="masthead">
-        <div class="section-content">
-            <div class="masthead-content">
-                <h1 class="title masthead-title">More than just your student union.</h1>
-                <p class="masthead-subtitle">
-                    Representing all students that study and/or live in Tilburg. By involving not only the students of Tilburg but also the associations focused on students we ensure that Tilburg will live up to all its potential as a student city.
-                    F.U.S.T. as a union ensures that there is always a place where students feel safe to voice their opinion and be themselves.
-                </p>
-                <div><a href="/become-a-member" class="button outline white">Join us now</a></div>
-            </div>
-            <div class="masthead-figure">
-                <img src="<?= get_template_directory_uri(); ?>/img/fust-header.jpg" alt="">
-                <div class="graphic"></div>
-            </div>
-        </div>
-        <svg class="masthead-transition" width="1920" height="57" viewBox="0 0 1920 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0L1920 55H0V0Z" fill="white" fill-opacity="0.3"/>
-            <path d="M0 17L1920 57H0V17Z" fill="white"/>
-        </svg>
-    </section>
+    <?php
+
+    $c = get_this_page_controller();
+    if( $c ) $c->render();
+
+    ?>
+    
     <section class="centered">
         <div class="section-content">
             <h1 class="title section-title">About F.U.S.T.</h1>

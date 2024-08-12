@@ -6,8 +6,6 @@
  * @package iws.fust
  */
 
-define('FUST_THEME_DIR', get_template_directory());
-
 class FUST
 {
     public static $post_types = ['FUST_News', 'FUST_Service', 'FUST_Activity'];
@@ -61,7 +59,8 @@ class FUST
         add_action('init', ['FUST', 'init']);
         add_action('add_meta_boxes', ['FUST', 'add_meta_boxes']);
         add_action('save_post', ['FUST', 'save_post']);
-        //add_action('enqueue_scripts', ['FUST', 'enqueue_scripts']);
+        // add_action('enqueue_scripts', ['FUST', 'enqueue_scripts']);
+        add_action('customize_register', ['FUST_Customizer', 'setup_customizer']);
 
         // Add the FUST admin page
         add_action('admin_menu', function() {
