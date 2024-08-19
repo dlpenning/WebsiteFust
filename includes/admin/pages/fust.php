@@ -17,14 +17,6 @@ function user_exists($email) {
     return email_exists($email);
 }
 
-function toSnakeCase($inputString) {
-    $snakeCaseString = preg_replace('/[^A-Za-z0-9]+/', '_', $inputString);
-    $snakeCaseString = strtolower($snakeCaseString);
-    $snakeCaseString = trim($snakeCaseString, '_');
-
-    return $snakeCaseString;
-}
-
 /**
  * Approve post requests happen to this page. Handle them here by creating a new user.
  */
@@ -37,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         return false;
     }
 
-    $username = toSnakeCase($entries[$id]['your-name']);
+    $username = to_snake_case($entries[$id]['your-name']);
     $email = $entries[$id]['your-email'];
     $display_name = $entries[$id]['your-name'];
 

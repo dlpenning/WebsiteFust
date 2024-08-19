@@ -12,7 +12,8 @@ $name = isset($_GET['username']) ? sanitize_text_field(urldecode($_GET['username
     <article class="section-content">
       <h1 class="title section-title">Thank You, <?php echo esc_html($name); ?>!</h1>
       <div class="thank-you-message">
-        <p>Your payment was successful. Check your email for more details.</p>
+        <p>Your registration was successful. In just a moment, you'll receive an email with more details. Great to have you on board!</p>
+        <a href="/" class="button primary">Back to homepage</a>
     </div>
     </article>
   </section>

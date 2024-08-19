@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('fust-membership-form');
 
   if (form) {
-    form.addEventListener('submit', function(event) {
+    document.addEventListener('wpcf7mailsent', function(event) {
         // Prevent default form submission
         event.preventDefault();
 
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const formObject = Object.fromEntries(formData.entries());
 
         // Stripe import performed by CDN in `head.php`
-        const stripe = Stripe('pk_test_51PnxmuBGvnR2SbwjyRras0MFDaRcdBPdApPbVopo3knp4nmPeIcmFRu5tDSlcn1NgYvWfHxKN5xAcDKRJuogY4ao00JxxcOQ3H'); // Replace with your Stripe publishable key
+        const stripe = Stripe('pk_test_51PnxmuBGvnR2SbwjyRras0MFDaRcdBPdApPbVopo3knp4nmPeIcmFRu5tDSlcn1NgYvWfHxKN5xAcDKRJuogY4ao00JxxcOQ3H');
 
         // Create a Checkout Session
         fetch('/wp-json/stripe/v1/create-checkout-session', {
@@ -94,7 +94,5 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error:', error);
         });
     });
-  } else {
-      console.error('Form not found');
   }
 });

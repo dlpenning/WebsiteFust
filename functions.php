@@ -123,8 +123,8 @@ function custom_login_redirect() {
  * 
  * @since 0.2.2
  */
-function create_fust_user_with_generated_password($username, $email, $display_name) {
-    if (!is_user_logged_in() || !current_user_can('administrator')) {
+function create_fust_user_with_generated_password($username, $email, $display_name, $webhook=FALSE) {
+    if (!$webhook && (!is_user_logged_in() || !current_user_can('administrator'))) {
         return false;
     }
 
@@ -146,30 +146,32 @@ function create_fust_user_with_generated_password($username, $email, $display_na
     // Check if the user was created successfully
     if (is_wp_error($user_id)) {
         echo "Error creating user: " . $user_id->get_error_message();
-    } else {
-        echo "User created successfully! ID: " . $user_id;
-
-        // Generate password reset URL
-        $reset_key = get_password_reset_key(get_userdata($user_id));
-        $reset_url = network_site_url("wp-login.php?action=rp&key=$reset_key&login=" . rawurlencode($username), 'login');
-
-        // Load your custom email template
-        $template = file_get_contents(get_template_directory() . '/email.html');
-
-        // Replace placeholders in the template
-        $message = str_replace(
-            array('{USERNAME}', '{EMAIL}', '{RESET_URL}'),
-            array($username, $email, $reset_url),
-            $template
-        );
-
-        // Set the email subject
-        $subject = 'Welcome to ' . get_bloginfo('name');
-
-        // Send the email
-        $headers = array('Content-Type: text/html; charset=UTF-8');
-        wp_mail($email, $subject, $message, $headers);
+        return false;
     }
+    echo "User created successfully! ID: " . $user_id;
+
+    // Generate password reset URL
+    $reset_key = get_password_reset_key(get_userdata($user_id));
+    $reset_url = network_site_url("wp-login.php?action=rp&key=$reset_key&login=" . rawurlencode($username), 'login');
+
+    // Load your custom email template
+    $template = file_get_contents(get_template_directory() . '/email.html');
+
+    // Replace placeholders in the template
+    $message = str_replace(
+        array('{USERNAME}', '{EMAIL}', '{RESET_URL}'),
+        array($username, $email, $reset_url),
+        $template
+    );
+
+    // Set the email subject
+    $subject = 'Welcome to ' . get_bloginfo('name');
+
+    // Send the email
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    wp_mail($email, $subject, $message, $headers);
+
+    return true;
 }
 
 function fust_get_vxcf_entries() {
@@ -357,20 +359,37 @@ function get_component_controller( $id )
 
 
 
-/* ------- Front-end formatting functions --------*/
+/* ------- Formatting functions --------*/
+
+
+function to_snake_case($input_string) {
+    $snake_case_string = preg_replace('/[^A-Za-z0-9]+/', '_', $input_string);
+    $snake_case_string = strtolower($snake_case_string);
+    $snake_case_string = trim($snake_case_string, '_');
+
+    return $snake_case_string;
+}
 
 // Excerpt length limiter
 function get_excerpt($limit, $source = null) {
     $excerpt = $source ? get_the_excerpt($source) : get_the_excerpt();
-    $excerpt = preg_replace(" (\[.*?\])",'',$excerpt);
-    $excerpt = strip_shortcodes($excerpt);
-    $excerpt = strip_tags($excerpt);
-    $excerpt = substr($excerpt, 0, $limit);
-    $excerpt = substr($excerpt, 0, strripos($excerpt, " "));
-    $excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
-    $excerpt = $excerpt.'&hellip;';
+    $excerpt = preg_replace(" (\[.*?\])",'',$excerpt);  // Remove shortcodes
+    $excerpt = strip_shortcodes($excerpt);              // Strip shortcodes
+    $excerpt = strip_tags($excerpt);                    // Strip HTML tags
+
+    // Only truncate if the excerpt length exceeds the limit
+    if (mb_strlen($excerpt) > $limit) {
+        $excerpt = substr($excerpt, 0, $limit); 
+        $excerpt = substr($excerpt, 0, strripos($excerpt, " "));
+        $excerpt = trim(preg_replace( '/\s+/', ' ', $excerpt));
+        $excerpt = $excerpt . '&hellip;';                 // Append ellipsis
+    } else {
+        $excerpt = trim($excerpt);                      // Just trim any excess whitespace
+    }
+
     return $excerpt;
 }
+
 
 // Line Break Shortcode
 function line_break_shortcode() {
@@ -434,9 +453,6 @@ function create_stripe_checkout_session() {
     // Access formData from the decoded JSON
     $form_data = isset($form_data['formData']) ? $form_data['formData'] : [];
 
-    // Log formData for debugging
-    error_log(print_r($form_data, TRUE));
-
     // Check if required keys exist in formData
     if (!isset($form_data['your-name']) || !isset($form_data['your-email'])) {
         wp_send_json_error(['error' => 'Required form fields are missing']);
@@ -493,3 +509,36 @@ add_action('rest_api_init', function () {
         'permission_callback' => '__return_true',
     ));
 });
+
+
+
+// Stripe Webhook
+function add_custom_api_endpoints() {
+    add_rewrite_rule('^api/stripe/v1/verify-checkout/?$', 'index.php?verify_checkout=1', 'top');
+}
+add_action('init', 'add_custom_api_endpoints');
+
+function register_custom_query_vars($vars) {
+    $vars[] = 'verify_checkout';
+    return $vars;
+}
+add_filter('query_vars', 'register_custom_query_vars');
+
+function custom_api_endpoint_template_include($template) {
+    global $wp_query;
+
+    if (isset($wp_query->query_vars['verify_checkout'])) {
+        $webhook_file = get_stylesheet_directory() . '/webhook.php';
+
+        // Ensure the file exists before including it
+        if (file_exists($webhook_file)) {
+            include $webhook_file;
+            exit; // Stop further execution
+        } else {
+            wp_die('Webhook handler file not found.');
+        }
+    }
+
+    return $template;
+}
+add_action('template_include', 'custom_api_endpoint_template_include');
