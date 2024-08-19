@@ -3,27 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,500;0,700;1,400&family=League+Spartan:wght@400;500;600&display=swap" rel="stylesheet">
     <title>Confirmation of your registration - F.U.S.T. Tilburg</title>
     <style>
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-:root {
-  --color-pink: #C67DFF;
-  --color-pink-light: #cd8ffd;
-  --color-purple: #7958B3;
-  --color-purple-light: #9474cc;
-  --color-yellow: #FFBD59;
-  --text-color-dark: #1E1E1E;
-  --text-color-body: rgba(30, 30, 30, 0.8);
-  --font-family-header: "League Spartan", sans-serif;
-  --padding-body-horizontal: 64px;
-}
-
 h1,
 h2,
 h3,
@@ -38,14 +22,17 @@ p {
 }
 
 body {
-  margin: 0;
-  padding: 0;
   font-family: "Lato", sans-serif;
-  color: var(--text-color-dark);
+  color: #1E1E1E;
+  background-color: #fff;
 }
 
+body * {
+    box-sizing: border-box;
+    margin: 0;
+}
 a.link {
-  color: var(--color-purple);
+  color: #7958B3;
   text-decoration: none;
 }
 a.link.white {
@@ -56,46 +43,87 @@ a.link.no-color {
   transition: color 100ms ease;
 }
 a.link.no-color:hover {
-  color: var(--color-purple);
+  color: #7958B3;
 }
-section {
-  position: relative;
-  padding: 4rem var(--padding-body-horizontal);
+.section {
+    padding: 3rem 6rem;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
 }
-section:nth-child(odd):not(:first-child) {
-  background-color: #f8f9fa;
+.section > * {
+    margin-bottom: 4px;
 }
-
-section.centered {
-  text-align: center;
+.section > h1:not(:first-child),
+.section > h2:not(:first-child) {
+    margin-top: 1rem;
+    margin-bottom: 8px;
 }
-
-section .section-content {
-  max-width: 1300px;
-  width: 100%;
-  margin: 0 auto;
+.section > a {
+    margin-top: 1rem;
 }
-
-section h1.section-title {
-  margin-bottom: 0.6em;
+.top-bar {
+    height: 32px;
+    background-color: #C67DFF;
 }
-
-.section-container {
-  margin: 48px auto;
+.main-bar {
+    display: block;
+    text-align: center;
+    gap: 1.5rem;
+    padding: 2rem 1rem;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    z-index: 1;
+    border-radius: 1rem 1rem 0 0;
 }
-
-.section-divider {
-  border-bottom: 1px solid var(--color-pink-light);
-  margin: 2rem auto;
-  width: 100%;
+.button {
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 400;
+  cursor: pointer;
 }
-    </style>
+.button.primary {
+  background-color: #C67DFF;
+  color: #fff !important;
+  transition: background-color 200ms;
+}
+.button.primary:hover {
+  background-color: #cd8ffd;
+}
+@media screen and (max-width: 1300px) {
+    .set-width-container {
+        max-width: 800px;
+    }
+}
+@media screen and (max-width: 900px) {
+    .section {
+        padding: 3rem 10%;
+    }
+}
+</style>
 </head>
 <body>
-    <section>
-        <div class="section-content">
-            <h1>Hi!</h1>
+    <div class="main">
+        <div class="top-bar"></div>
+        <div class="section main-bar">
+            <a href="https://fusttilburg.nl" class="link no-color" target="_blank">
+                <svg width="30" height="43" viewBox="0 0 30 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 0H30V5.29137H17.6578V38.6513H12.3422V5.29137H0V0Z" fill="#7958B3"/>
+                    <path d="M18.5743 6.20368H30V28.0686C30 36.315 23.2843 43 15 43C6.71573 43 0 36.315 0 28.0686V6.20368H11.4257V10.6436H5.31568V12.7115H9.77597V16.7256H5.31568V27.947C5.31568 33.271 9.6515 37.587 15 37.587C20.3485 37.587 24.6843 33.271 24.6843 27.947V16.7256H20.224V12.7115H24.6843V10.6436H18.5743V6.20368Z" fill="#C67DFF"/>
+                    <path d="M19.1853 17.273H10.8147L7.82077 20.2532V25.727L17.6578 31.5049H12.3422V29.133H7.82077V32.4781L10.8147 35.5191H19.1242L22.1792 32.4781V27.1259L12.3422 21.2871H17.6578V23.6591H22.1792V20.2532L19.1853 17.273Z" fill="#FFBD59"/>
+                    <path d="M12.3422 21.2871H17.6578V31.5049H12.3422V21.2871Z" fill="#7958B3"/>
+                </svg>
+            </a>
+            <h1>Welcome to F.U.S.T.!</h1>
         </div>
-    </section>
+        <div class="section">
+            <h1>Registration confirmed</h1>
+            <p>We're happy to have you on board. Your member registration for Federale Unie Studenten Tilburg has been successfully received and processed, and you're hereby officially a member!</p>
+            <p>We've automatically created an account for you on the website so you can access the member benefits. Press the button below to reset your password and log in.</p>
+            <a href="{RESET_URL}" class="button primary" target="_blank">Reset your password</a>
+        </div>
+    </div>
 </body>
 </html>

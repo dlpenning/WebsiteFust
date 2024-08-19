@@ -155,8 +155,10 @@ input:not([type=checkbox]):not([type=submit]):hover, input:not([type=checkbox]):
 .wpcf7 select {
   background-color: #fff;
 }
-.wpcf7 input[type=submit] {
+.wpcf7 input[type=submit],
+.wpcf7 button[type=submit] {
   display: inline-block;
+  font-family: "Lato", sans-serif;
   padding: 8px 24px;
   border-radius: 1000px;
   text-decoration: none;
@@ -168,19 +170,24 @@ input:not([type=checkbox]):not([type=submit]):hover, input:not([type=checkbox]):
   color: #fff;
   transition: background-color 200ms;
 }
-.wpcf7 input[type=submit].has-spinner {
+.wpcf7 input[type=submit].has-spinner,
+.wpcf7 button[type=submit].has-spinner {
   width: auto !important;
 }
-.wpcf7 input[type=submit].has-spinner + * {
+.wpcf7 input[type=submit].has-spinner + *,
+.wpcf7 button[type=submit].has-spinner + * {
   width: 24px !important;
 }
-.wpcf7 input[type=submit]:hover {
+.wpcf7 input[type=submit]:hover,
+.wpcf7 button[type=submit]:hover {
   background-color: var(--color-pink-light);
 }
-.wpcf7 input[type=submit][disabled] {
+.wpcf7 input[type=submit][disabled],
+.wpcf7 button[type=submit][disabled] {
   background-color: #aaa;
 }
-.wpcf7 input[type=submit]:not([disabled]) {
+.wpcf7 input[type=submit]:not([disabled]),
+.wpcf7 button[type=submit]:not([disabled]) {
   cursor: pointer;
 }
 .wpcf7 .wpcf7-response-output {
@@ -276,6 +283,36 @@ input:not([type=checkbox]):not([type=submit]):hover, input:not([type=checkbox]):
     display: block;
     margin-bottom: 6px;
   }
+}
+
+button.simpay-btn {
+  display: inline-block;
+  font-family: "Lato", sans-serif;
+  padding: 8px 24px;
+  border-radius: 1000px;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1rem;
+  border: none;
+  outline-color: var(--color-purple);
+  background-color: var(--color-pink);
+  color: #fff;
+  transition: background-color 200ms;
+}
+button.simpay-btn.has-spinner {
+  width: auto !important;
+}
+button.simpay-btn.has-spinner + * {
+  width: 24px !important;
+}
+button.simpay-btn:hover {
+  background-color: var(--color-pink-light);
+}
+button.simpay-btn[disabled] {
+  background-color: #aaa;
+}
+button.simpay-btn:not([disabled]) {
+  cursor: pointer;
 }
 
 /*
@@ -485,4 +522,35 @@ Section: Activities
   .masthead .section-content {
     gap: 24px;
   }
+}
+/*
+Knowledge database
+*/
+.knowledge-database-header {
+  background-color: var(--color-purple);
+  color: #fff;
+}
+.knowledge-database-header > article > .section-title {
+  margin: 1rem 0 0;
+}
+
+article.knowledge-database-article h1 {
+  font-size: 2rem;
+  margin: 2rem 0 10px;
+}
+article.knowledge-database-article > * {
+  margin-bottom: 10px;
+}
+article.knowledge-database-article details {
+  border: 1px dotted var(--color-pink);
+  border-radius: 5px;
+  padding: 1rem 1.5rem;
+  margin: 1rem 0;
+}
+article.knowledge-database-article details summary {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+article.knowledge-database-article details summary + p {
+  margin: 0.5rem 0 0 1.1rem;
 }/*# sourceMappingURL=style.css.map */

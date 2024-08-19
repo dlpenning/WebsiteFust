@@ -2,7 +2,6 @@
 // The absolute theme directory (on harddisk)
 define('FUST_THEME_DIR', get_template_directory());
 
-
 include FUST_THEME_DIR . '/includes/class-fust.php';
 include FUST_THEME_DIR . '/includes/post_types/class.news.php';
 include FUST_THEME_DIR . '/includes/post_types/class.service.php';
@@ -10,6 +9,10 @@ include FUST_THEME_DIR . '/includes/post_types/class.activity.php';
 include FUST_THEME_DIR . '/includes/customizer/controls/seperator.php';
 include FUST_THEME_DIR . '/includes/class-fust-customizer.php';
 include FUST_THEME_DIR . '/includes/customizer/class-fust-page.php';
+
+// Include Stripe's main library file
+require_once get_template_directory() . '/stripe-php/init.php';
+
 
 FUST::hooks();
 
@@ -146,8 +149,26 @@ function create_fust_user_with_generated_password($username, $email, $display_na
     } else {
         echo "User created successfully! ID: " . $user_id;
 
-        // Send email notification to user and site admin
-        wp_new_user_notification($user_id, $password);
+        // Generate password reset URL
+        $reset_key = get_password_reset_key(get_userdata($user_id));
+        $reset_url = network_site_url("wp-login.php?action=rp&key=$reset_key&login=" . rawurlencode($username), 'login');
+
+        // Load your custom email template
+        $template = file_get_contents(get_template_directory() . '/email.html');
+
+        // Replace placeholders in the template
+        $message = str_replace(
+            array('{USERNAME}', '{EMAIL}', '{RESET_URL}'),
+            array($username, $email, $reset_url),
+            $template
+        );
+
+        // Set the email subject
+        $subject = 'Welcome to ' . get_bloginfo('name');
+
+        // Send the email
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+        wp_mail($email, $subject, $message, $headers);
     }
 }
 
@@ -238,53 +259,54 @@ function activity_get_the_date($post) {
 /**
  * Contact Form 7 custom validation
  */
-function custom_iban_validation_filter($result, $tag) {
+// function custom_iban_validation_filter($result, $tag) {
 
-    // Specify the name of the field you want to validate
-    $name = $tag->name;
+//     // Specify the name of the field you want to validate
+//     $name = $tag->name;
 
-    if ($name == 'iban') {
-        // Get the value submitted in the field
-        $value = isset($_POST[$name]) ? trim($_POST[$name]) : '';
+//     if ($name == 'iban') {
+//         // Get the value submitted in the field
+//         $value = isset($_POST[$name]) ? trim($_POST[$name]) : '';
 
-        if (!validate_iban($value)) {
-            // Set the validation error message
-            $result->invalidate($tag, "The IBAN code you entered is not valid.");
-        }
-    }
+//         if (!validate_iban($value)) {
+//             // Set the validation error message
+//             $result->invalidate($tag, "The IBAN code you entered is not valid.");
+//         }
+//     }
 
-    return $result;
-}
-add_filter('wpcf7_validate_text*', 'custom_iban_validation_filter', 10, 2);
-add_filter('wpcf7_validate_text', 'custom_iban_validation_filter', 10, 2);
+//     return $result;
+// }
+// add_filter('wpcf7_validate_text*', 'custom_iban_validation_filter', 10, 2);
+// add_filter('wpcf7_validate_text', 'custom_iban_validation_filter', 10, 2);
 
 
-function validate_iban($iban) {
-    // Normalize the input by removing spaces and converting to uppercase
-    $iban = strtoupper(str_replace(' ', '', $iban));
 
-    // The first two characters must be letters, and the next two must be digits
-    if (!preg_match('/^[A-Z]{2}\d{2}/', $iban)) {
-        return false;
-    }
+// function validate_iban($iban) {
+//     // Normalize the input by removing spaces and converting to uppercase
+//     $iban = strtoupper(str_replace(' ', '', $iban));
 
-    // Move the first four characters to the end of the string
-    $iban = substr($iban, 4) . substr($iban, 0, 4);
+//     // The first two characters must be letters, and the next two must be digits
+//     if (!preg_match('/^[A-Z]{2}\d{2}/', $iban)) {
+//         return false;
+//     }
 
-    // Convert letters to numbers (A = 10, B = 11, ..., Z = 35)
-    $iban = str_replace(
-        range('A', 'Z'),
-        range(10, 35),
-        $iban
-    );
+//     // Move the first four characters to the end of the string
+//     $iban = substr($iban, 4) . substr($iban, 0, 4);
 
-    // Convert the string to an integer and calculate the remainder of the division by 97
-    if (bcmod($iban, 97) != 1) {
-        return false;
-    }
+//     // Convert letters to numbers (A = 10, B = 11, ..., Z = 35)
+//     $iban = str_replace(
+//         range('A', 'Z'),
+//         range(10, 35),
+//         $iban
+//     );
 
-    return false;
-}
+//     // Convert the string to an integer and calculate the remainder of the division by 97
+//     if (my_bcmod($iban, 97) != 1) {
+//         return false;
+//     }
+
+//     return false;
+// }
 
 
 /**
@@ -388,3 +410,86 @@ function fust_add_page( $page_template_file, $page_unique_id, $display_name, $co
 @ini_set( 'upload_max_size' , '256M' );
 @ini_set( 'post_max_size', '256M');
 @ini_set( 'max_execution_time', '300' );
+
+function create_stripe_checkout_session() {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        wp_send_json_error(['error' => 'Invalid request method']);
+        return;
+    }
+
+    // Stripe API key (secret, defined in WP-config)
+    \Stripe\Stripe::setApiKey(STRIPE_SECRET_KEY);
+
+    // Read raw POST data
+    $rawData = file_get_contents('php://input');
+
+    // Decode JSON data
+    $form_data = json_decode($rawData, true);
+
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        wp_send_json_error(['error' => 'Invalid JSON data']);
+        return;
+    }
+
+    // Access formData from the decoded JSON
+    $form_data = isset($form_data['formData']) ? $form_data['formData'] : [];
+
+    // Log formData for debugging
+    error_log(print_r($form_data, TRUE));
+
+    // Check if required keys exist in formData
+    if (!isset($form_data['your-name']) || !isset($form_data['your-email'])) {
+        wp_send_json_error(['error' => 'Required form fields are missing']);
+        return;
+    }
+
+    $amount = 500; // Amount in cents
+
+    // Build URLs to pass form data
+    $success_url = add_query_arg([
+        'session_id' => '{CHECKOUT_SESSION_ID}',
+        'username' => urlencode($form_data['your-name']),
+        'email' => urlencode($form_data['your-email']),
+    ], site_url('/thank-you'));
+    
+    $cancel_url = add_query_arg([
+        'username' => urlencode($form_data['your-name']),
+        'email' => urlencode($form_data['your-email']),
+    ], site_url('/cancel-membership-registration'));
+
+    try {
+        $session = \Stripe\Checkout\Session::create([
+            'payment_method_types' => ['card', 'ideal', 'paypal'], // Add other payment methods if needed
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => 'F.U.S.T. Membership fee',
+                    ],
+                    'unit_amount' => $amount,
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => $success_url,
+            'cancel_url' => $cancel_url,
+            'metadata' => [
+                'username' => $form_data['your-name'],
+                'email' => $form_data['your-email'],
+            ],
+        ]);
+
+        wp_send_json_success(['id' => $session->id]);
+
+    } catch (Exception $e) {
+        wp_send_json_error(['error' => $e->getMessage()]);
+    }
+}
+
+add_action('rest_api_init', function () {
+    register_rest_route('stripe/v1', '/create-checkout-session', array(
+        'methods' => 'POST',
+        'callback' => 'create_stripe_checkout_session',
+        'permission_callback' => '__return_true',
+    ));
+});

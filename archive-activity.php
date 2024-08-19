@@ -11,6 +11,88 @@ function render_activity_time($id) {
 }
 
 $activities = fust_get_activities();
+
+// Initialize future and past activities arrays
+$activities_future = array();
+$activities_past = array();
+
+// Loop through all activities and classify them into future or past
+foreach ($activities as $activity) {
+    // Retrieve the date meta field, assume it's stored as 'Y/m/d'
+    $date = get_post_meta($activity->ID, 'date', true);
+    $activity_timestamp = strtotime($date);
+
+    if ($activity_timestamp >= strtotime(date('Y/m/d'))) {
+        $activities_future[] = $activity;
+    } else {
+        $activities_past[] = $activity;
+    }
+}
+
+// Sort future activities: closest to furthest
+usort($activities_future, function($a, $b) {
+    $date_a = strtotime(get_post_meta($a->ID, 'date', true));
+    $date_b = strtotime(get_post_meta($b->ID, 'date', true));
+    return $date_a - $date_b;
+});
+
+// Sort past activities: most recent to oldest
+usort($activities_past, function($a, $b) {
+    $date_a = strtotime(get_post_meta($a->ID, 'date', true));
+    $date_b = strtotime(get_post_meta($b->ID, 'date', true));
+    return $date_b - $date_a;
+});
+
+
+
+// $activities_future = [];
+// $activities_past = [];
+
+// foreach ($activities as $activity) {
+//     $now = intval(date("Ymd"));
+//     $date = get_post_meta($activity->ID, 'date', true);
+//     $components = explode('/', $date);
+
+//     if (!count($components) == 3) {
+//         break;
+//     }
+
+//     // Format date as {YYYY}{MM}{dd} for sorting purposes
+//     $date_formatted = $components[2] . $components[1] . $components[0];
+
+//     if ( isset( $ordered_activities[$date_formatted] )) {
+//         array_push($ordered_activities[$date_formatted], $activity);
+//     } else {
+//         $ordered_activities[$date_formatted] = $activity;
+//     }
+// }
+
+// // Sort the events
+// ksort($ordered);
+
+// // The keys are the dates, formatted as "Ymd"
+// $dates = array_keys( $ordered );
+
+function fust_render_activity($activity, $date) {
+    $id = $activity->ID;
+
+    // Render time
+    $time = render_activity_time($id);
+
+    // Render date
+    $d = DateTime::createFromFormat('Ymd', $date);
+    if ($d === false) {
+        echo 'Error: Incorrect date format!</br>';
+    } else {
+        setlocale(LC_TIME, "nl_NL");
+        $date_day = strftime('%d', $d->getTimestamp());
+        $date_month_short = strftime('%b', $d->getTimestamp());
+        $date_stylized = strftime('%d %B %Y', $d->getTimestamp());
+    }
+    ?>
+    <h1>Test</h1>
+    <?php
+}
 ?>
 
 <?= get_template_part('templates/header') ?>
@@ -23,6 +105,17 @@ $activities = fust_get_activities();
 
             <div class="activity-overview">
                 <div class="activity-list">
+
+                <?php
+
+                $i = 0;
+
+                foreach ($ordered_activities as $activity) {
+                    $date = $dates[i];
+                    $now = intval(date("Ymd"));
+                }
+
+                ?>
                 <?php if (have_posts()) {
                     while (have_posts()) : the_post(); ?>
 
@@ -40,7 +133,7 @@ $activities = fust_get_activities();
                                 <?php } ?>
                             </div>
                             <p class="activity-list-item-subtitle"><?= get_excerpt(100, $p) ?></p>
-                        </section>
+                        </div>
 
                     <?php endwhile;
                 } else {

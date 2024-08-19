@@ -162,7 +162,7 @@ class FUST_Components_masthead
                     <p class="masthead-subtitle">
                     <?= get_option('fust_masthead_subtitle', 'Representing all students that study and/or live in Tilburg. By involving not only the students of Tilburg but also the associations focused on students we ensure that Tilburg will live up to all its potential as a student city. F.U.S.T. as a union ensures that there is always a place where students feel safe to voice their opinion and be themselves.'); ?>
                     </p>
-                    <div><a id="masthead-cta-button" href="<?= get_the_permalink(get_option('fust_masthead_cta_page')) ?>" class="button outline white"><?= get_option('fust_masthead_cta_button_text')?></a></div>
+                    <div><a id="masthead-cta-button" href="<?= get_the_permalink(get_option('fust_masthead_cta_page')) ?>" class="button outline white"><?= get_option('fust_masthead_cta_button_text', 'Join us now')?></a></div>
                 </div>
                 <div class="masthead-figure">
                     <img src="<?= get_option('fust_masthead_picture', 'https://placehold.co/800x600?text=FUST&font=Open+Sans') ?>" alt="">

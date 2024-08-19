@@ -183,8 +183,10 @@ input:not([type=checkbox]):not([type=submit]), select {
     background-color: #fff;
   }
 
-  input[type=submit] {
+  input[type=submit],
+  button[type=submit] {
     display: inline-block;
+    font-family: 'Lato', sans-serif;
     padding: 8px 24px;
     border-radius: 1000px;
     text-decoration: none;
@@ -321,6 +323,43 @@ input:not([type=checkbox]):not([type=submit]), select {
     }
   }
 }
+
+
+button.simpay-btn {
+    display: inline-block;
+    font-family: 'Lato', sans-serif;
+    padding: 8px 24px;
+    border-radius: 1000px;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1rem;
+    border: none;
+    outline-color: var(--color-purple);
+    background-color: var(--color-pink);
+    color: #fff;
+    transition: background-color 200ms;
+
+    &.has-spinner {
+      width: auto !important;
+
+      & + * {
+        width: 24px !important;
+      }
+    }
+
+    &:hover {
+      background-color: var(--color-pink-light);
+    }
+    
+    &[disabled] {
+      background-color: #aaa;
+    }
+
+    &:not([disabled]) {
+      cursor: pointer;
+    }
+}
+
 
 /*
 Section: Login
@@ -561,4 +600,50 @@ Section: Activities
   .masthead .section-content {
     gap: 24px;
   }
+}
+
+
+
+
+
+/*
+Knowledge database
+*/
+
+.knowledge-database-header {
+    background-color: var(--color-purple);
+    color: #fff;
+
+    & > article > .section-title {
+        margin: 1rem 0 0;
+    }
+}
+
+article.knowledge-database-article {
+    h1 {
+        font-size: 2rem;
+        margin: 2rem 0 10px;
+    }
+
+    & > * {
+        margin-bottom: 10px;
+    }
+
+    details {
+        border: 1px dotted var(--color-pink);
+        border-radius: 5px;
+        padding: 1rem 1.5rem;
+        margin: 1rem 0;
+
+        summary {
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        summary + p {
+            margin: 0.5rem 0 0 1.1rem;
+        }
+
+        
+    }
 }
