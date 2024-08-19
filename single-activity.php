@@ -48,7 +48,7 @@ function get_google_calendar_link($loc, $start_time, $end_time)
                 <ul>
                     <li><span class="icon-wrapper"><i class="far fa-fw fa-calendar"></i></span><span id="activity-date"><?= $formatted_date ?></span></li>
                     <li><span class="icon-wrapper"><i class="far fa-fw fa-clock"></i></span><?= $formatted_time ?></li>
-                    <li><span class="icon-wrapper"><i class="fas fa-fw fa-map-marker-alt"></i></span><?= $location ?></li>
+                    <?php if (trim($location) !== '') { ?> <li><span class="icon-wrapper"><i class="fas fa-fw fa-map-marker-alt"></i></span><?= $location ?></li> <?php } ?>
                 </ul>
                 <a href="<?= get_google_calendar_link($location, $start_date_time_iso, $end_date_time_iso) ?>" target="_blank" class="button primary">Add to Google Calendar</a>
             </div>

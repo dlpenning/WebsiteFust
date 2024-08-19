@@ -641,6 +641,10 @@ Component: Calendar
   align-items: flex-start;
   gap: 1rem;
 
+  h2 {
+    margin: 0.67em 0;
+  }
+
   .activity-list {
     flex: 1;
 

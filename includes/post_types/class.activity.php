@@ -48,6 +48,11 @@ class FUST_Activity
     }
 
     public static function parse_tags($tagsString) {
+        // Check if the input string is empty or only contains whitespace
+        if (trim($tagsString) === '') {
+            return [];
+        }
+    
         // Split the tags string into an array using the comma as a delimiter
         $tagsArray = explode(',', $tagsString);
     
@@ -56,6 +61,7 @@ class FUST_Activity
     
         return $tagsArray;
     }
+    
 
     public static function formatLocaleDate($date, $lang) {
         // Convert input date string to DateTime object
@@ -225,54 +231,41 @@ class FUST_Activity
         <?php
 	}
 
-    public static function save_post( $post )
-	{
-        # Sanity checks
-		if (!wp_verify_nonce($_POST['fust_activity_data_metabox_nonce'], 'fust_save_activity' ) ) return;
-		if (wp_is_post_autosave($post)) return;
-
-        # Save the meta fields
-        if (isset($_POST['fust_location'])) {
-            update_post_meta($post, 'location', sanitize_text_field( $_POST['fust_location'] ));
+    public static function save_post($post) {
+        # Ensure nonce verification and avoid autosave
+        if (!isset($_POST['fust_activity_data_metabox_nonce']) ||
+            !wp_verify_nonce($_POST['fust_activity_data_metabox_nonce'], 'fust_save_activity')) {
+            return;
         }
 
-        if (isset($_POST['fust_date'])) {
-            update_post_meta($post, 'date', sanitize_text_field( $_POST['fust_date'] ));
+        if (wp_is_post_autosave($post)) {
+            return;
         }
 
-        if (isset($_POST['fust_tags'])) {
-            update_post_meta($post, 'tags', sanitize_text_field( $_POST['fust_tags'] ));
-        }
+        # Define the fields and corresponding meta keys
+        $fields = [
+            'fust_location' => 'location',
+            'fust_date' => 'date',
+            'fust_tags' => 'tags',
+            'fust_time_start_hours' => 'start_hours',
+            'fust_time_start_minutes' => 'start_minutes',
+            'fust_time_end_hours' => 'end_hours',
+            'fust_time_end_minutes' => 'end_minutes'
+        ];
 
-        if (isset($_POST['fust_time_start_hours'])) {
-            update_post_meta($post, 'start_hours', sanitize_text_field( $_POST['fust_time_start_hours'] ));
-        }
-
-        if (isset($_POST['fust_time_start_minutes'])) {
-            update_post_meta($post, 'start_minutes', sanitize_text_field( $_POST['fust_time_start_minutes'] ));
-        }
-
-        if (isset($_POST['fust_time_end_hours'])) {
-            update_post_meta($post, 'end_hours', sanitize_text_field( $_POST['fust_time_end_hours'] ));
-        }
-
-        if (isset($_POST['fust_time_end_minutes'])) {
-            update_post_meta($post, 'end_minutes', sanitize_text_field( $_POST['fust_time_end_minutes'] ));
-        }
-        
-        // Not working FSR
-        // update_field('fust_location', 'location');
-        // update_field('fust_date', 'date');
-        // update_field('fust_start_hours', 'start_hours');
-        // update_field('fust_start_minutes', 'start_minutes');
-        // update_field('fust_end_hours', 'end_hours');
-        // update_field('fust_end_minutes', 'end_minutes');
-	}
-
-    private static function update_field( $request_field, $field)
-    {
-        if (isset($_POST[$request_field])) {
-            update_post_meta($post, $field, sanitize_text_field( $_POST[$request_field] ));
+        # Loop through the fields and update them
+        foreach ($fields as $request_field => $meta_key) {
+            self::update_field($request_field, $meta_key);
         }
     }
+
+    private static function update_field($request_field, $meta_key) {
+        # Ensure $post is accessible
+        global $post;
+
+        if (isset($_POST[$request_field])) {
+            update_post_meta($post->ID, $meta_key, sanitize_text_field($_POST[$request_field]));
+        }
+    }
+
 }

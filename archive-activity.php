@@ -16,13 +16,20 @@ $activities = fust_get_activities();
 $activities_future = array();
 $activities_past = array();
 
-// Loop through all activities and classify them into future or past
-foreach ($activities as $activity) {
-    // Retrieve the date meta field, assume it's stored as 'Y/m/d'
-    $date = get_post_meta($activity->ID, 'date', true);
-    $activity_timestamp = strtotime($date);
+// Current date
+$current_date = DateTime::createFromFormat('d/m/Y', date('d/m/Y'));
 
-    if ($activity_timestamp >= strtotime(date('Y/m/d'))) {
+foreach ($activities as $activity) {
+    $date_str = get_post_meta($activity->ID, 'date', true);
+    $activity_date = DateTime::createFromFormat('d/m/Y', $date_str);
+
+    // Handle invalid date formats
+    if ($activity_date === false) {
+        continue;
+    }
+
+    // Compare activity date with current date
+    if ($activity_date >= $current_date) {
         $activities_future[] = $activity;
     } else {
         $activities_past[] = $activity;
@@ -31,72 +38,78 @@ foreach ($activities as $activity) {
 
 // Sort future activities: closest to furthest
 usort($activities_future, function($a, $b) {
-    $date_a = strtotime(get_post_meta($a->ID, 'date', true));
-    $date_b = strtotime(get_post_meta($b->ID, 'date', true));
-    return $date_a - $date_b;
+    $date_a = DateTime::createFromFormat('d/m/Y', get_post_meta($a->ID, 'date', true));
+    $date_b = DateTime::createFromFormat('d/m/Y', get_post_meta($b->ID, 'date', true));
+
+    // Handle invalid date formats
+    if ($date_a === false || $date_b === false) {
+        return 0;
+    }
+
+    return $date_a <=> $date_b;
 });
 
 // Sort past activities: most recent to oldest
 usort($activities_past, function($a, $b) {
-    $date_a = strtotime(get_post_meta($a->ID, 'date', true));
-    $date_b = strtotime(get_post_meta($b->ID, 'date', true));
-    return $date_b - $date_a;
+    $date_a = DateTime::createFromFormat('d/m/Y', get_post_meta($a->ID, 'date', true));
+    $date_b = DateTime::createFromFormat('d/m/Y', get_post_meta($b->ID, 'date', true));
+
+    // Handle invalid date formats
+    if ($date_a === false || $date_b === false) {
+        return 0;
+    }
+
+    return $date_b <=> $date_a;
 });
 
-
-
-// $activities_future = [];
-// $activities_past = [];
-
-// foreach ($activities as $activity) {
-//     $now = intval(date("Ymd"));
-//     $date = get_post_meta($activity->ID, 'date', true);
-//     $components = explode('/', $date);
-
-//     if (!count($components) == 3) {
-//         break;
-//     }
-
-//     // Format date as {YYYY}{MM}{dd} for sorting purposes
-//     $date_formatted = $components[2] . $components[1] . $components[0];
-
-//     if ( isset( $ordered_activities[$date_formatted] )) {
-//         array_push($ordered_activities[$date_formatted], $activity);
-//     } else {
-//         $ordered_activities[$date_formatted] = $activity;
-//     }
-// }
-
-// // Sort the events
-// ksort($ordered);
-
-// // The keys are the dates, formatted as "Ymd"
-// $dates = array_keys( $ordered );
-
-function fust_render_activity($activity, $date) {
+function fust_render_activity($activity) {
     $id = $activity->ID;
+    $date = get_post_meta($id, 'date', true);
 
     // Render time
     $time = render_activity_time($id);
 
     // Render date
-    $d = DateTime::createFromFormat('Ymd', $date);
+    $d = DateTime::createFromFormat('d/m/Y', $date);
     if ($d === false) {
         echo 'Error: Incorrect date format!</br>';
+        return;
     } else {
-        setlocale(LC_TIME, "nl_NL");
-        $date_day = strftime('%d', $d->getTimestamp());
-        $date_month_short = strftime('%b', $d->getTimestamp());
-        $date_stylized = strftime('%d %B %Y', $d->getTimestamp());
+        $date_day = $d->format('d');
+        $date_month_short = $d->format('M');
+        $date_stylized = $d->format('d F Y');
     }
     ?>
-    <h1>Test</h1>
+    <div class="activity-list-item">
+        <h1><a class="link white" href="<?= service_get_the_custom_permalink($activity) ?>"><?= get_the_title($activity) ?></a></h1>
+        <p><?= $date_stylized ?></p>
+        <p class="meta"><?= $time ?></p>
+        <div class="activity-tags">
+            <?php
+            $tags = get_post_meta($id, 'tags', true);
+            $tags_array = FUST_Activity::parse_tags($tags);
+
+            foreach ($tags_array as $tag) { ?>
+                <span><?= $tag ?></span>
+            <?php } ?>
+        </div>
+        <?php
+        // Get the manual excerpt
+        $manual_excerpt = get_post_field('post_excerpt', $activity->ID);
+
+        // Get the content (description) of the post
+        $content = get_post_field('post_content', $activity->ID);
+
+        // Check if both the manual excerpt and content are empty
+        if (!empty($manual_excerpt) || !empty(trim($content))) {  ?>
+            <p class="activity-list-item-subtitle"><?= get_excerpt(100, $activity); ?></p>
+        <?php } ?>
+    </div>
     <?php
 }
 ?>
 
 <?= get_template_part('templates/header') ?>
-
 
 <main role="main" class="no-banner">
     <section class="archive-content activities reduced-top-space">
@@ -105,40 +118,23 @@ function fust_render_activity($activity, $date) {
 
             <div class="activity-overview">
                 <div class="activity-list">
-
-                <?php
-
-                $i = 0;
-
-                foreach ($ordered_activities as $activity) {
-                    $date = $dates[i];
-                    $now = intval(date("Ymd"));
-                }
-
-                ?>
-                <?php if (have_posts()) {
-                    while (have_posts()) : the_post(); ?>
-
-                        <div class="activity-list-item">
-                            <h1><a class="link white" href="<?= service_get_the_custom_permalink($post) ?>"><?= get_the_title($p) ?></h1></a>
-                            <p><?= FUST_Activity::formatLocaleDate(get_post_meta($post->ID, 'date', true), 'en') ?></p>
-                            <p class="meta"><?= render_activity_time($post->ID) ?></p>
-                            <div class="activity-tags">
-                                <?php
-                                $tags = get_post_meta($post->ID, 'tags', true);
-                                $tags_array = FUST_Activity::parse_tags($tags);
-
-                                foreach ($tags_array as $tag) { ?>
-                                    <span><?= $tag ?></span>
-                                <?php } ?>
-                            </div>
-                            <p class="activity-list-item-subtitle"><?= get_excerpt(100, $p) ?></p>
-                        </div>
-
-                    <?php endwhile;
-                } else {
-                    echo 'No activities planned currently, please come back later!';
-                } ?>
+                    <h2>Upcoming activities</h2>
+                    <?php if (!empty($activities_future)) : ?>
+                        <?php foreach ($activities_future as $activity) : ?>
+                            <?php fust_render_activity($activity); ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p>No upcoming activities at the moment. Please check back later!</p>
+                    <?php endif; ?>
+                    
+                    <h2>Past activities</h2>
+                    <?php if (!empty($activities_past)) : ?>
+                        <?php foreach ($activities_past as $activity) : ?>
+                            <?php fust_render_activity($activity); ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p>No past activities available.</p>
+                    <?php endif; ?>
                 </div>
 
                 <?php /*
@@ -163,6 +159,7 @@ function fust_render_activity($activity, $date) {
                 </div>
                 */ ?>
             </div>
+        </div>
     </section>
 </main>
 

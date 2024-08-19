@@ -234,7 +234,8 @@ input:not([type=checkbox]):not([type=submit]), select {
 
   form > p:nth-last-child(3) { display: block; }
 
-  [data-name=pay-consent] {
+  [data-name=pay-consent],
+  [data-name=privacy-consent] {
     .wpcf7-list-item {
       margin-left: 0;
     }

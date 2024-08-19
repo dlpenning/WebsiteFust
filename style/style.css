@@ -202,10 +202,12 @@ input:not([type=checkbox]):not([type=submit]):hover, input:not([type=checkbox]):
 .wpcf7 form > p:nth-last-child(3) {
   display: block;
 }
-.wpcf7 [data-name=pay-consent] .wpcf7-list-item {
+.wpcf7 [data-name=pay-consent] .wpcf7-list-item,
+.wpcf7 [data-name=privacy-consent] .wpcf7-list-item {
   margin-left: 0;
 }
-.wpcf7 [data-name=pay-consent] .wpcf7-list-item-label {
+.wpcf7 [data-name=pay-consent] .wpcf7-list-item-label,
+.wpcf7 [data-name=privacy-consent] .wpcf7-list-item-label {
   margin-left: 8px;
 }
 .wpcf7 .wpcf7-form-control-wrap {

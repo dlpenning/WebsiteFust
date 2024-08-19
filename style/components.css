@@ -545,6 +545,9 @@ Component: Calendar
   align-items: flex-start;
   gap: 1rem;
 }
+.activity-overview h2 {
+  margin: 0.67em 0;
+}
 .activity-overview .activity-list {
   flex: 1;
 }
