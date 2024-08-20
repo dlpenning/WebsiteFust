@@ -287,7 +287,8 @@ input:not([type=checkbox]):not([type=submit]):hover, input:not([type=checkbox]):
   }
 }
 
-button.simpay-btn {
+input[type=submit],
+button[type=submit] {
   display: inline-block;
   font-family: "Lato", sans-serif;
   padding: 8px 24px;
@@ -301,19 +302,24 @@ button.simpay-btn {
   color: #fff;
   transition: background-color 200ms;
 }
-button.simpay-btn.has-spinner {
+input[type=submit].has-spinner,
+button[type=submit].has-spinner {
   width: auto !important;
 }
-button.simpay-btn.has-spinner + * {
+input[type=submit].has-spinner + *,
+button[type=submit].has-spinner + * {
   width: 24px !important;
 }
-button.simpay-btn:hover {
+input[type=submit]:hover,
+button[type=submit]:hover {
   background-color: var(--color-pink-light);
 }
-button.simpay-btn[disabled] {
+input[type=submit][disabled],
+button[type=submit][disabled] {
   background-color: #aaa;
 }
-button.simpay-btn:not([disabled]) {
+input[type=submit]:not([disabled]),
+button[type=submit]:not([disabled]) {
   cursor: pointer;
 }
 

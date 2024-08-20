@@ -326,7 +326,8 @@ input:not([type=checkbox]):not([type=submit]), select {
 }
 
 
-button.simpay-btn {
+input[type=submit],
+button[type=submit] {
     display: inline-block;
     font-family: 'Lato', sans-serif;
     padding: 8px 24px;
@@ -359,7 +360,7 @@ button.simpay-btn {
     &:not([disabled]) {
       cursor: pointer;
     }
-}
+  }
 
 
 /*

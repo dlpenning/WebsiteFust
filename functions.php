@@ -66,6 +66,11 @@ add_action('wp_enqueue_scripts', 'add_fust_stylesheets');
 add_action('init', ['FUST_News', 'setup']);
 add_action('init', ['FUST_Service', 'setup']);
 add_action('init', ['FUST_Activity', 'setup']);
+add_action('init', ['FUST_Activity', 'setup']);
+
+add_action('admin_post_handle_activity_signup', ['FUST_Activity', 'handle_activity_signup']);
+add_action('admin_post_nopriv_handle_activity_signup', ['FUST_Activity', 'handle_activity_signup']);
+
 
 add_action('admin_menu', 'post_remove');
 
@@ -159,8 +164,8 @@ function create_fust_user_with_generated_password($username, $email, $display_na
 
     // Replace placeholders in the template
     $message = str_replace(
-        array('{USERNAME}', '{EMAIL}', '{RESET_URL}'),
-        array($username, $email, $reset_url),
+        array('{NAME}', '{EMAIL}', '{RESET_URL}'),
+        array($display_name, $email, $reset_url),
         $template
     );
 
@@ -432,6 +437,7 @@ function fust_add_page( $page_template_file, $page_unique_id, $display_name, $co
 
 function create_stripe_checkout_session() {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        error_log('Invalid request method');
         wp_send_json_error(['error' => 'Invalid request method']);
         return;
     }
@@ -446,6 +452,7 @@ function create_stripe_checkout_session() {
     $form_data = json_decode($rawData, true);
 
     if (json_last_error() !== JSON_ERROR_NONE) {
+        error_log('Invalid JSON data');
         wp_send_json_error(['error' => 'Invalid JSON data']);
         return;
     }
@@ -455,6 +462,7 @@ function create_stripe_checkout_session() {
 
     // Check if required keys exist in formData
     if (!isset($form_data['your-name']) || !isset($form_data['your-email'])) {
+        error_log('Required form fields are missing');
         wp_send_json_error(['error' => 'Required form fields are missing']);
         return;
     }
@@ -475,7 +483,7 @@ function create_stripe_checkout_session() {
 
     try {
         $session = \Stripe\Checkout\Session::create([
-            'payment_method_types' => ['card', 'ideal', 'paypal'], // Add other payment methods if needed
+            'payment_method_types' => ['card', 'ideal'], // Add other payment methods if needed
             'line_items' => [[
                 'price_data' => [
                     'currency' => 'eur',
@@ -498,6 +506,7 @@ function create_stripe_checkout_session() {
         wp_send_json_success(['id' => $session->id]);
 
     } catch (Exception $e) {
+        error_log('Exception caught: ' . $e->getMessage());
         wp_send_json_error(['error' => $e->getMessage()]);
     }
 }
@@ -542,3 +551,20 @@ function custom_api_endpoint_template_include($template) {
     return $template;
 }
 add_action('template_include', 'custom_api_endpoint_template_include');
+
+
+add_filter( 'ure_role_additional_options', 'add_prohibit_access_to_admin_option', 10, 1 );
+
+function add_prohibit_access_to_admin_option($items) {
+    $item = URE_Role_Additional_Options::create_item( 'prohibit_admin_access', esc_html__('Prohibit access to admin', 'user-role-editor'), 'init', 'prohibit_access_to_admin' );
+    $items[$item->id] = $item;
+    
+    return $items;
+}
+
+function prohibit_access_to_admin() {
+    
+    if ( is_admin() && !wp_doing_ajax() ) {
+        wp_redirect( get_home_url() );
+    }
+}
