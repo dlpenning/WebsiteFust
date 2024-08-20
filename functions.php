@@ -70,6 +70,8 @@ add_action('init', ['FUST_Activity', 'setup']);
 
 add_action('admin_post_handle_activity_signup', ['FUST_Activity', 'handle_activity_signup']);
 add_action('admin_post_nopriv_handle_activity_signup', ['FUST_Activity', 'handle_activity_signup']);
+add_action('wp_ajax_delete_signup', ['FUST_Activity', 'handle_delete_signup']);
+
 
 
 add_action('admin_menu', 'post_remove');

@@ -57,3 +57,37 @@ function setupActivityPostTypeValidation() {
 
   fustDateInput.addEventListener('blur', (e) => handleBlur(e))
 }
+
+// Activity signup handling
+jQuery(document).ready(function($) {
+  $(document).on('click', '.delete-signup-button', function(e) {
+      e.preventDefault();
+      
+      var $button = $(this);
+      var userId = $button.data('user-id');
+      var activityId = $button.data('activity-id');
+      var nonce = $button.data('nonce');
+
+      $.ajax({
+          url: ajaxurl,
+          type: 'POST',
+          data: {
+              action: 'delete_signup', // Must match the action in PHP
+              user_id: userId,
+              activity_id: activityId,
+              delete_signup_nonce_field: nonce
+          },
+          success: function(response) {
+              if (response.success) {
+                  $button.closest('tr').remove(); // Remove the row from the table
+                  alert('Signup deleted successfully');
+              } else {
+                  alert('Failed to delete signup: ' + response.data);
+              }
+          },
+          error: function(xhr, status, error) {
+              console.error(status, error); // Debug AJAX request failure
+          }
+      });
+  });
+});

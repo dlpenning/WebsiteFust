@@ -301,13 +301,16 @@ class FUST_Activity
                         <td><?php echo esc_html($is_member_text); ?></td>
                         <td>
                             <?php if ($is_member) : ?>
-                                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
-                                    <input type="hidden" name="action" value="handle_activity_signup">
-                                    <input type="hidden" name="activity_id" value="<?php echo esc_attr($post->ID); ?>">
-                                    <input type="hidden" name="delete_user_id" value="<?php echo esc_attr($user_id); ?>">
-                                    <?php wp_nonce_field('delete_signup_nonce', 'delete_signup_nonce_field'); ?>
-                                    <button type="submit" name="delete_signup_submit" class="button button-secondary"><?php _e('Delete', 'fust'); ?></button>
-                                </form>
+                                <button type="button"
+                                    class="delete-signup-button button button-secondary" 
+                                    data-user-id="<?php echo esc_attr($user_id); ?>" 
+                                    data-activity-id="<?php echo esc_attr($post->ID); ?>" 
+                                    data-nonce="<?php echo wp_create_nonce('delete_signup_nonce'); ?>">
+                                    <?php _e('Delete', 'fust'); ?>
+                                </button>
+
+                                </script>
+
 
                             <?php endif; ?>
                         </td>
@@ -404,7 +407,39 @@ class FUST_Activity
         wp_redirect(get_permalink($activity_id));
         exit;
     }
+
+    public static function handle_delete_signup() {
+        error_log('handle_delete_signup called'); // Debug log
     
+        if (!isset($_POST['delete_signup_nonce_field']) || !wp_verify_nonce($_POST['delete_signup_nonce_field'], 'delete_signup_nonce')) {
+            error_log('Invalid nonce'); // Debug log
+            wp_die('Invalid nonce');
+        }
+    
+        $activity_id = intval($_POST['activity_id']);
+        $delete_user_id = intval($_POST['user_id']);
+        
+        if ($delete_user_id > 0) {
+            error_log('Processing delete for user ID: ' . $delete_user_id); // Debug log
+    
+            // Retrieve existing signups
+            $signups = get_post_meta($activity_id, 'activity_signups', true);
+            $signups = is_array($signups) ? $signups : [];
+    
+            // Remove the user from the signups
+            $signups = array_filter($signups, function($signup) use ($delete_user_id) {
+                return !($signup['is_member'] && $signup['user_id'] == $delete_user_id);
+            });
+    
+            update_post_meta($activity_id, 'activity_signups', $signups);
+            error_log('Signups updated: ' . print_r($signups, true)); // Debug log
+    
+            wp_send_json_success('Signup deleted successfully');
+        } else {
+            error_log('Invalid user ID'); // Debug log
+            wp_send_json_error('Invalid user ID');
+        }
+    }    
     
 
     public static function is_user_signed_up($activity_id, $user_id) {
