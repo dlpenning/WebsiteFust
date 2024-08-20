@@ -106,6 +106,15 @@ $top_services = array_slice($services, 0, 4);
                         <p>Magister JFT is the Legal Faculty Association of Tilburg Law School, and organises career, social, as well as study related events for all her members.</p>
                     </div>
                 </div>
+                <div class="partner-grid-item">
+                    <div class="logo">
+                        <img src="<?= get_template_directory_uri(); ?>/img/stimulus.jpeg" alt="">
+                    </div>
+                    <div class="content">
+                        <h2><a href="https://www.fractiestimulus.nl/" class="link no-color" target="_blank">Stimulus</a></h2>
+                        <p>Stimulus is the oldest student party of the School Council of Tilburg University's School of Social and Behavioural Sciences. Our mission is to represent all TSB students, so that they can empower their education and stimulate their development; Academic and Beyond.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

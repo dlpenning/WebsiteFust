@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const formObject = Object.fromEntries(formData.entries());
 
         // Stripe import performed by CDN in `head.php`
-        const stripe = Stripe('pk_test_51PnxmuBGvnR2SbwjyRras0MFDaRcdBPdApPbVopo3knp4nmPeIcmFRu5tDSlcn1NgYvWfHxKN5xAcDKRJuogY4ao00JxxcOQ3H');
+        const stripe = Stripe('pk_live_51PnxmuBGvnR2SbwjS59okVDU8zrXDjKjcshTrdYyzG4Fwa1grvyCQioj5Kq4szrwqWWcwdGzq3T8aTnd5xtvdPLn009rbkmvQH');
 
         // Create a Checkout Session
         fetch('/wp-json/stripe/v1/create-checkout-session', {
