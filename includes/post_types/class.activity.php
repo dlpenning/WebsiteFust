@@ -40,12 +40,15 @@ class FUST_Activity
             'menu_position' => 10,
             'rewrite' => array("slug" => "activities", "with_front" => false)
         ]);
+
+        add_action('save_post', ['FUST_Activity', 'save_payment_fields_meta_box']);
     }
 
     public static function register_metaboxes()
     {
         add_meta_box('fust_activity_data_metabox', __('Activity Data', 'fust'), array('FUST_Activity', 'fust_activity_data_metabox' ), 'activity', 'advanced');
         add_meta_box('fust_activity_signup_metabox', __('Activity Users Signed Up', 'fust'), array('FUST_Activity', 'fust_activity_signup_metabox' ), 'activity', 'advanced');
+        add_meta_box('fust_activity_payment_metabox', __('Activity Payment Options', 'fust'), array('FUST_Activity', 'fust_activity_payment_metabox' ), 'activity', 'side', 'high');
     }
 
     public static function parse_tags($tagsString) {
@@ -177,12 +180,26 @@ class FUST_Activity
             </div>
     
             <!-- Signup settings -->
+            <h3>Sign up</h3>
             <div class="field">
-            <label for="fust_allow_non_member_signup">
-                <input type="checkbox" name="fust_allow_non_member_signup" id="fust_allow_non_member_signup" value="1" <?php checked($allow_non_member_signup, '1'); ?> />
-                    Allow non-members to sign up
+                <label for="enable_signups">
+                    <input type="checkbox" name="enable_signups" id="enable_signups" value="1" <?php checked(get_post_meta($post->ID, 'enable_signups', true), '1'); ?> />
+                    Enable Sign-Ups
                 </label>
             </div>
+
+            <div class="field">
+                <label><b>Who can sign up?</b></label><br />
+                <label for="fust_sign_up_allowed_members_only">
+                    <input type="radio" name="fust_sign_up_allowed" id="fust_sign_up_allowed_members_only" value="members_only" <?php checked(get_post_meta($post->ID, 'fust_sign_up_allowed', true), 'members_only'); ?> />
+                    Members only
+                </label><br />
+                <label for="fust_sign_up_allowed_open">
+                    <input type="radio" name="fust_sign_up_allowed" id="fust_sign_up_allowed_open" value="open" <?php checked(get_post_meta($post->ID, 'fust_sign_up_allowed', true), 'open'); ?> />
+                    Open for everyone
+                </label>
+            </div>
+
 
             <div class="field">
                 <label><b>Fields required for non-members:</b></label><br />
@@ -190,6 +207,27 @@ class FUST_Activity
                 <label><input type="checkbox" name="fust_non_member_fields[]" value="full_name" <?php checked(in_array('full_name', $non_member_fields)); ?> /> Full Name</label><br />
                 <label><input type="checkbox" name="fust_non_member_fields[]" value="phone_number" <?php checked(in_array('phone_number', $non_member_fields)); ?> /> Phone Number</label>
             </div>
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const enableSignupsCheckbox = document.getElementById('enable_signups');
+                const signUpAllowedRadio = document.querySelectorAll('input[name="fust_sign_up_allowed"]');
+                const nonMemberFields = document.querySelectorAll('input[name="fust_non_member_fields[]"]');
+
+                function toggleFields() {
+                    const isChecked = enableSignupsCheckbox.checked;
+                    signUpAllowedRadio.forEach(field => {
+                        field.disabled = !isChecked;
+                    });
+                    nonMemberFields.forEach(field => {
+                        field.disabled = !isChecked;
+                    });
+                }
+
+                enableSignupsCheckbox.addEventListener('change', toggleFields);
+                toggleFields(); // Initialize the state on page load
+            });
+            </script>
+
             <style>
                 .activity-data-metabox label {
                     display: block;
@@ -323,8 +361,34 @@ class FUST_Activity
             echo '<p>' . __('No users have signed up for this activity.', 'fust') . '</p>';
         }
     }
-    
-    
+
+    public static function fust_activity_payment_metabox($post) {
+        $request_payment = get_post_meta($post->ID, 'request_payment', true);
+        $payment_amount = get_post_meta($post->ID, 'payment_amount', true);
+        ?>
+        <p>
+            <label for="request_payment">
+                <input type="checkbox" id="request_payment" name="request_payment" value="1" <?php checked($request_payment, '1'); ?> />
+                <?php _e('Request Payment', 'fust'); ?>
+            </label>
+        </p>
+        <p>
+            <label for="payment_amount"><?php _e('Payment Amount (in EUR):', 'fust'); ?></label>
+            <input type="text" id="payment_amount" name="payment_amount" value="<?php echo esc_attr($payment_amount); ?>" />
+        </p>
+        <?php
+    }
+
+    public static function save_payment_fields_meta_box($post_id) {
+        if (array_key_exists('request_payment', $_POST)) {
+            update_post_meta($post_id, 'request_payment', '1');
+        } else {
+            delete_post_meta($post_id, 'request_payment');
+        }
+        if (array_key_exists('payment_amount', $_POST)) {
+            update_post_meta($post_id, 'payment_amount', sanitize_text_field($_POST['payment_amount']));
+        }
+    }
 
 
     public static function handle_activity_signup() {
@@ -381,7 +445,9 @@ class FUST_Activity
                     ];
                 }
                 update_post_meta($activity_id, 'activity_signups', $signups);
+                wp_redirect(add_query_arg('signup_status', 'success', get_permalink($activity_id)));
                 error_log('Signups updated after signup submit: ' . print_r($signups, true));
+                exit;
             }
         } elseif (isset($_POST['activity_unsubscribe_submit']) && $user_id > 0) {
             if ($already_signed_up) {
@@ -390,7 +456,9 @@ class FUST_Activity
                     return !($signup['is_member'] && isset($signup['user_id']) && $signup['user_id'] == $user_id);
                 });
                 update_post_meta($activity_id, 'activity_signups', $signups);
+                wp_redirect(add_query_arg('signup_status', 'unsubscribed', get_permalink($activity_id)));
                 error_log('Signups updated after unsubscribe submit: ' . print_r($signups, true));
+                exit;
             }
         } elseif (isset($_POST['delete_signup_submit']) && isset($_POST['delete_signup_nonce_field']) && wp_verify_nonce($_POST['delete_signup_nonce_field'], 'delete_signup_nonce')) {
             // Handle deletion of signups
@@ -488,10 +556,18 @@ class FUST_Activity
         foreach ($fields as $request_field => $meta_key) {
             self::update_field($request_field, $meta_key, $post_id);
         }
+
+        // Save the enable_signups checkbox
+        $enable_signups = isset($_POST['enable_signups']) ? '1' : '0';
+        update_post_meta($post_id, 'enable_signups', $enable_signups);
     
         // Save the allow_non_member_signup checkbox
         $allow_non_member_signup = isset($_POST['fust_allow_non_member_signup']) ? '1' : '0';
         update_post_meta($post_id, 'allow_non_member_signup', $allow_non_member_signup);
+
+        // Save the sign-up option
+        $sign_up_allowed = isset($_POST['fust_sign_up_allowed']) ? sanitize_text_field($_POST['fust_sign_up_allowed']) : 'open';
+        update_post_meta($post_id, 'fust_sign_up_allowed', $sign_up_allowed);
     
         // Save the non_member_fields checkboxes
         $non_member_fields = isset($_POST['fust_non_member_fields']) ? array_map('sanitize_text_field', $_POST['fust_non_member_fields']) : [];

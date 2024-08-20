@@ -561,4 +561,16 @@ article.knowledge-database-article details summary {
 }
 article.knowledge-database-article details summary + p {
   margin: 0.5rem 0 0 1.1rem;
+}
+
+.activity-details-sign-up h2 {
+  margin: 0.67em 0;
+}
+
+#activity-signup-form label {
+  display: inline-block;
+  margin: 0.67em 0 0.33em;
+}
+#activity-signup-form input + button {
+  margin-top: 1rem;
 }/*# sourceMappingURL=style.css.map */

@@ -26,9 +26,12 @@ function get_google_calendar_link($post_id, $loc, $start_time, $end_time) {
 function render_activity_signup_form() {
     // Get the current post ID
     $activity_id = get_the_ID();
+
+    // Check if sign up is enabled at all for this activity
+    $enable_signups = get_post_meta($activity_id, 'enable_signups', true);
     
-    // Check if non-member signup is allowed
-    $allow_non_member_signup = get_post_meta($activity_id, 'allow_non_member_signup', true);
+    // Check which users are allowed to sign up
+    $sign_up_allowed = get_post_meta($activity_id, 'fust_sign_up_allowed', true);
     
     // Get the fields required for non-member signup
     $non_member_fields = get_post_meta($activity_id, 'non_member_fields', true);
@@ -41,19 +44,29 @@ function render_activity_signup_form() {
     // Determine if the current user is signed up
     $is_signed_up = is_user_logged_in() ? FUST_Activity::is_user_signed_up($activity_id, get_current_user_id()) : false;
 
+    // Display success message if available
+    $signup_status = isset($_GET['signup_status']) ? sanitize_text_field($_GET['signup_status']) : '';
+    if ($signup_status === 'success') {
+        echo '<p style="color: green;">Successfully signed up for the activity!</p>';
+    } elseif ($signup_status === 'unsubscribed') {
+        echo '<p style="color: green;">Successfully unsubscribed from the activity.</p>';
+    }
+
     ?>
     <form id="activity-signup-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
         <input type="hidden" name="action" value="handle_activity_signup">
         <input type="hidden" name="activity_id" value="<?= esc_attr($activity_id); ?>" />
 
-        <?php if (is_user_logged_in()): ?>
+        <?php if (!$enable_signups): ?>
+            <p>No sign up required, this activity is open for everyone!</p>
+        <?php elseif (is_user_logged_in()): ?>
             <?php if ($is_signed_up): ?>
                 <p>You are already signed up for this activity.</p>
-                <button type="submit" name="activity_unsubscribe_submit">Unsubscribe from this Activity</button>
+                <button type="submit" name="activity_unsubscribe_submit">Deregister from this activity</button>
             <?php else: ?>
-                <button type="submit" name="activity_signup_submit">Sign Up for this Activity</button>
+                <button type="submit" name="activity_signup_submit">Sign up for this activity</button>
             <?php endif; ?>
-        <?php elseif ($allow_non_member_signup): ?>
+        <?php elseif ($sign_up_allowed === 'open'): ?>
             <?php if (in_array('email', $non_member_fields)): ?>
                 <label for="non_member_email">Email:</label>
                 <input type="email" name="non_member_email" id="non_member_email" required>
@@ -69,7 +82,7 @@ function render_activity_signup_form() {
                 <input type="text" name="non_member_phone_number" id="non_member_phone_number" required>
             <?php endif; ?>
             
-            <button type="submit" name="activity_signup_submit">Sign Up for this Activity</button>
+            <button type="submit" name="activity_signup_submit">Sign up for this activity</button>
         <?php else: ?>
             <p>You must be logged in to sign up for this activity.</p>
         <?php endif; ?>
@@ -97,8 +110,10 @@ function render_activity_signup_form() {
                         <?= the_content() ?>
                     </article>
                 <?php endwhile; endif; ?>
-
-                <?php render_activity_signup_form(get_the_ID()); ?>
+                <div class="activity-details-sign-up">
+                    <h2>Sign up</h2>
+                    <?php render_activity_signup_form(get_the_ID()); ?>
+                </div>
             </div>
             <div class="activity-metadata">
                 <h3>Metadata</h3>
