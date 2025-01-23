@@ -90,6 +90,10 @@ function load_scripts() {
 function add_admin_scripts() {
     wp_enqueue_script('util', get_template_directory_uri() . '/js/util.js');
     wp_enqueue_script('admin', get_template_directory_uri() . '/js/admin.js');
+
+    if (is_admin()) {
+        wp_enqueue_media(); // Enqueue the media uploader
+    }
 }
 
 add_action('wp_enqueue_scripts', 'load_scripts');
@@ -553,13 +557,25 @@ function apply_as_guest_member() {
 
     [$subject, $message] = generate_guest_member_email($form_data);
 
-    $association_emails = array(
-        'Student Party SAM' => 'johndoe@example.com',
-        'Magister JFT' => 'johndoe@example.com',
-        'Stimulus' => 'johndoe@example.com',
-    );
+    // Map association names to email addresses, given the email addresses in the joint_associations option
+    $association_option_data = get_option('joint_associations', []); // Normal array containing 'name' and 'email' field
+    $association_name = $form_data['association'];
 
-    $email_address = $association_emails[$form_data['association']];
+    // Find the association email
+    $email_address = '';
+    
+    foreach ($association_option_data as $association) {
+        if ($association['name'] === $association_name) {
+            $email_address = $association['email'];
+            break;
+        }
+    }
+
+    if (empty($email_address)) {
+        error_log('Association email not found');
+        wp_send_json_error(['error' => 'Association email not found']);
+        return;
+    }
 
     // Send the email
     $headers = array('Content-Type: text/html; charset=UTF-8');

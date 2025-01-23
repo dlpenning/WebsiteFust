@@ -88,33 +88,35 @@ $top_services = array_slice($services, 0, 4);
             <h1 class="title section-title">Joined Associations</h1>
             
             <div class="partner-grid">
-                <div class="partner-grid-item">
-                    <div class="logo">
-                        <img src="<?= get_template_directory_uri(); ?>/img/sam.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h2><a href="https://fractiesam.nl/" class="link no-color" target="_blank">Student Party SAM</a></h2>
-                        <p>Student Party SAM is the oldest student party of Tilburg university. Student Party SAM establishes an encouraging student climate in which all students can achieve their ambitions.</p>
-                    </div>
-                </div>
-                <div class="partner-grid-item">
-                    <div class="logo">
-                        <img src="<?= get_template_directory_uri(); ?>/img/magister.png" alt="">
-                    </div>
-                    <div class="content">
-                        <h2><a href="https://magisterjft.nl/" class="link no-color" target="_blank">Magister JFT</a></h2>
-                        <p>Magister JFT is the Legal Faculty Association of Tilburg Law School, and organises career, social, as well as study related events for all her members.</p>
-                    </div>
-                </div>
-                <div class="partner-grid-item">
-                    <div class="logo">
-                        <img src="<?= get_template_directory_uri(); ?>/img/stimulus.jpeg" alt="">
-                    </div>
-                    <div class="content">
-                        <h2><a href="https://www.fractiestimulus.nl/" class="link no-color" target="_blank">Stimulus</a></h2>
-                        <p>Stimulus is the oldest student party of the School Council of Tilburg University's School of Social and Behavioural Sciences. Our mission is to represent all TSB students, so that they can empower their education and stimulate their development; Academic and Beyond.</p>
-                    </div>
-                </div>
+                <?php
+                // Get saved associations from the options table
+                $associations = get_option('joint_associations', []);
+
+                if (!empty($associations)) {
+                    foreach ($associations as $association) {
+                        $logo_url = !empty($association['logo_url']) ? esc_url($association['logo_url']) : get_template_directory_uri() . '/img/default-logo.png';
+                        $name = esc_html($association['name']);
+                        $description = esc_html($association['description']);
+                        $website = !empty($association['website']) ? esc_url($association['website']) : '#'; // Use '#' if no website is provided
+                        ?>
+                        <div class="partner-grid-item">
+                            <div class="logo">
+                                <img src="<?= $logo_url; ?>" alt="<?= $name; ?>">
+                            </div>
+                            <div class="content">
+                                <h2>
+                                    <a href="<?= $website; ?>" class="link no-color" target="_blank"><?= $name; ?></a>
+                                </h2>
+                                <p><?= $description; ?></p>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                } else {
+                    // If no associations are found, display a message
+                    echo '<p>No joined associations found.</p>';
+                }
+                ?>
             </div>
         </div>
     </section>
