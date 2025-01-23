@@ -55,7 +55,7 @@ switch ($event->type) {
             error_log('Successfully validated Stripe session checkout. Creating user with username: ' . $username . ', email: ' . $email . ' and name ' . $name);
 
             // Create the user with a generated password
-            $success = create_fust_user_with_generated_password($username, $email, $name, TRUE);
+            $success = create_fust_user_with_generated_password($username, $email, $name, TRUE, FALSE);
 
             if (!$success) {
                 throw new Exception('Could not create user.');
