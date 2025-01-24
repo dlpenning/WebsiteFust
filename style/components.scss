@@ -88,7 +88,8 @@ header.app-header {
             height: 100%;
           }
 
-          &.current-menu-item > a {
+          &.current-menu-item > a,
+          &.current-menu-ancestor > a {
             color: var(--color-purple);
           }
 
@@ -226,34 +227,77 @@ header.app-header {
           display: block;
           margin-top: 2rem;
 
+          /* Collapsible Submenus */
+          .menu-item-has-children > .sub-menu {
+            display: none; /* Hide submenus by default */
+            margin-left: 1rem; /* Optional: Indent submenus */
+          }
+
+          .menu-item-has-children.open > .sub-menu {
+            display: block; /* Show submenu when parent is toggled open */
+          }
+
+          /* Optional: Add icons to indicate collapsibility */
+          .menu-item-has-children > a::after {
+            content: '\f078'; /* Down arrow from Font Awesome */
+            font-family: 'Font Awesome 5 Free';
+            margin-left: 8px;
+            font-size: 12px;
+          }
+
+          .menu-item-has-children.open > a::after {
+            content: '\f077'; /* Up arrow when open */
+          }
+
           ul {
             display: block;
             padding: 0;
             margin: 0;
           }
 
-          ul.sub-menu {
-            margin: 1rem 0 2rem;
-            margin-left: 1rem;
-
-            a {
-              font-size: 1rem;
-            }
+          a {
+            display: block;
+            padding: 1rem 2rem;
+            color: #ffffff99;
+            font-size: 1.25rem;
+            border-radius: 8px;
           }
 
           li {
             padding: 0;
             margin: 0;
             list-style: none;
+            border-radius: 8px;
 
-            & + li {
-              margin-top: 1rem;
+            &.current-menu-ancestor,
+            &.current-menu-item {
+              & > a {
+                color: #fff;
+              }
+            }
+
+            &.open {
+              background-color: #ffffff28;
+
+              & > a {
+                background-color: #fff;
+                color: var(--color-pink);
+              }
             }
           }
 
-          a {
-            color: #fff;
-            font-size: 1.5rem;
+          ul.sub-menu {
+            padding: 1rem 2rem;
+            margin-left: 0 !important;
+
+            a {
+              font-size: 1rem;
+            }
+
+            li.current-menu-item:not(.current-menu-ancestor) > a {
+              color: #fff;
+              background-color: transparent;
+            }
           }
         }
 

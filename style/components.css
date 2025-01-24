@@ -78,7 +78,7 @@ header.app-header .main-navbar .main-navbar-inner nav .menu-item a {
   justify-content: center;
   height: 100%;
 }
-header.app-header .main-navbar .main-navbar-inner nav .menu-item.current-menu-item > a {
+header.app-header .main-navbar .main-navbar-inner nav .menu-item.current-menu-item > a, header.app-header .main-navbar .main-navbar-inner nav .menu-item.current-menu-ancestor > a {
   color: var(--color-purple);
 }
 header.app-header .main-navbar .main-navbar-inner nav .menu-item:hover > a {
@@ -192,30 +192,63 @@ header.app-header .main-navbar .main-navbar-inner .right-nav svg {
   header.app-header .main-navbar .nav-screen .menu-fust-app-header-container {
     display: block;
     margin-top: 2rem;
+    /* Collapsible Submenus */
+    /* Optional: Add icons to indicate collapsibility */
+  }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container .menu-item-has-children > .sub-menu {
+    display: none; /* Hide submenus by default */
+    margin-left: 1rem; /* Optional: Indent submenus */
+  }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container .menu-item-has-children.open > .sub-menu {
+    display: block; /* Show submenu when parent is toggled open */
+  }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container .menu-item-has-children > a::after {
+    content: "\f078"; /* Down arrow from Font Awesome */
+    font-family: "Font Awesome 5 Free";
+    margin-left: 8px;
+    font-size: 12px;
+  }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container .menu-item-has-children.open > a::after {
+    content: "\f077"; /* Up arrow when open */
   }
   header.app-header .main-navbar .nav-screen .menu-fust-app-header-container ul {
     display: block;
     padding: 0;
     margin: 0;
   }
-  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container ul.sub-menu {
-    margin: 1rem 0 2rem;
-    margin-left: 1rem;
-  }
-  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container ul.sub-menu a {
-    font-size: 1rem;
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container a {
+    display: block;
+    padding: 1rem 2rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.25rem;
+    border-radius: 8px;
   }
   header.app-header .main-navbar .nav-screen .menu-fust-app-header-container li {
     padding: 0;
     margin: 0;
     list-style: none;
+    border-radius: 8px;
   }
-  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container li + li {
-    margin-top: 1rem;
-  }
-  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container a {
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container li.current-menu-ancestor > a, header.app-header .main-navbar .nav-screen .menu-fust-app-header-container li.current-menu-item > a {
     color: #fff;
-    font-size: 1.5rem;
+  }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container li.open {
+    background-color: rgba(255, 255, 255, 0.1568627451);
+  }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container li.open > a {
+    background-color: #fff;
+    color: var(--color-pink);
+  }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container ul.sub-menu {
+    padding: 1rem 2rem;
+    margin-left: 0 !important;
+  }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container ul.sub-menu a {
+    font-size: 1rem;
+  }
+  header.app-header .main-navbar .nav-screen .menu-fust-app-header-container ul.sub-menu li.current-menu-item:not(.current-menu-ancestor) > a {
+    color: #fff;
+    background-color: transparent;
   }
   header.app-header .main-navbar .nav-screen .button {
     display: block;

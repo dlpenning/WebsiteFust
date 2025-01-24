@@ -8,27 +8,62 @@ function setupNavigation() {
   const navClose = document.querySelector('.nav-close')
 
   if (navBurger) {
-    navBurger.addEventListener('click', () => {
-      openNav()
-    })
+    navBurger.addEventListener('click', openNav)
   }
 
   function openNav() {
-    body.classList.add('overflow-hidden')
-    navScreen.classList.add('open')
-
-    navClose.addEventListener('click', () => {
-      closeNav()
-    })
+    // Add classes to open the nav
+    body.classList.add('overflow-hidden');
+    navScreen.classList.add('open');
+  
+    // Automatically open ancestor submenus of the current menu item in the mobile nav
+    const navScreenMenu = navScreen.querySelector('.menu'); // Target nav-screen's menu only
+    const currentItem = navScreenMenu.querySelector('.current-menu-item'); // Use this menu only
+  
+    if (currentItem) {
+      let parent = currentItem.closest('.current-menu-ancestor');
+  
+      // Traverse and open all ancestor menu items
+      while (parent) {
+        parent.classList.add('open'); // Add 'open' class
+        parent = parent.parentElement.closest('.current-menu-ancestor'); // Move to next ancestor
+      }
+    }
+  
+    // Attach event to close button
+    navClose.addEventListener('click', closeNav);
   }
+  
 
   function closeNav() {
     body.classList.remove('overflow-hidden')
     navScreen.classList.remove('open')
   }
-}
+  
+  // Add event listener to submenus to toggle them open/closed
+  const menuItems = document.querySelectorAll('.menu-item-has-children > a');
+  
+  menuItems.forEach((menuItem) => {
+    menuItem.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent default link behavior
 
-setupNavigation()
+        const parentItem = this.parentElement;
+
+        // Toggle 'open' class on the clicked item
+        parentItem.classList.toggle('open');
+
+        // Optional: Close other open submenus if necessary
+        parentItem
+            .parentElement
+            .querySelectorAll('.menu-item-has-children')
+            .forEach((sibling) => {
+                if (sibling !== parentItem) {
+                    sibling.classList.remove('open');
+                }
+            });
+        });
+    });
+}
 
 
 /**
@@ -49,8 +84,6 @@ function setupMemberSignup() {
     })
   }
 }
-
-setupMemberSignup()
 
 
 /**
@@ -130,6 +163,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Ensure the DOM is fully loaded before adding the event listener
   const form = document.getElementById('fust-membership-form');
   const guestForm = document.getElementById('fust-guest-membership-form');
+
+  setupNavigation()
+  setupMemberSignup()
 
   if (form) {
     setupMemberSignupSubmission(form);
