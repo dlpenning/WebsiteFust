@@ -1,5 +1,10 @@
 <?php
+/*
+Template Name: Home page
+*/
 fust_set_title('Homepage');
+
+add_action('customize_register', array( 'FUST_Home_Page', 'setup_customizer' ));
 
 $services = fust_get_services();
 $top_services = array_slice($services, 0, 4);
@@ -8,26 +13,13 @@ $top_services = array_slice($services, 0, 4);
 <?= get_template_part('templates/header') ?>
 
 <main role="main">
-    <section class="masthead">
-        <div class="section-content">
-            <div class="masthead-content">
-                <h1 class="title masthead-title">More than just your student union.</h1>
-                <p class="masthead-subtitle">
-                    Representing all students that study and/or live in Tilburg. By involving not only the students of Tilburg but also the associations focused on students we ensure that Tilburg will live up to all its potential as a student city.
-                    F.U.S.T. as a union ensures that there is always a place where students feel safe to voice their opinion and be themselves.
-                </p>
-                <div><a href="/become-a-member" class="button outline white">Join us now</a></div>
-            </div>
-            <div class="masthead-figure">
-                <img src="<?= get_template_directory_uri(); ?>/img/20230829-fust-066.jpg" alt="">
-                <div class="graphic"></div>
-            </div>
-        </div>
-        <svg class="masthead-transition" width="1920" height="57" viewBox="0 0 1920 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0L1920 55H0V0Z" fill="white" fill-opacity="0.3"/>
-            <path d="M0 17L1920 57H0V17Z" fill="white"/>
-        </svg>
-    </section>
+    <?php
+
+    $c = get_this_page_controller();
+    if( $c ) $c->render();
+
+    ?>
+    
     <section class="centered">
         <div class="section-content">
             <h1 class="title section-title">About F.U.S.T.</h1>
@@ -45,11 +37,13 @@ $top_services = array_slice($services, 0, 4);
             </div>
         </div>
     </section>
-    <div class="section-divider"></div>
+    <!-- <div class="section-divider"></div> -->
     <section>
         <div class="section-content">
             <h1 class="title section-title">Member benefits</h1>
             <p>We provide a number of (digital) exclusive member benefits. Check out our most popular ones below!</p>
+
+            <?php if (is_user_logged_in()) { ?>
 
             <div class="services-grid section-container">
 
@@ -66,8 +60,64 @@ $top_services = array_slice($services, 0, 4);
                     </div>
                 </a>
             <?php } ?>
+
             </div>
+
+            <?php } else { ?>
+
+            <div class="no-access-card">
+                <div class="no-access-card-img-wrapper">
+                    <img src="<?= get_template_directory_uri(); ?>/img/undraw_access_denied.svg" alt="">
+                </div>
+                <div class="no-access-card-content-wrapper">
+                    <div>
+                        <i class="fas fa-lock fa-4x"></i>
+                        <h1 class="title">Access denied</h1>
+                        <p><i>You have to be logged in to view our member benefits. Become a member now to create your account!</i></p>
+                        <a href="/become-a-member" class="button outline white">Join us now</a>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
             <a href="/services" class="button primary">View all member benefits</a>
+        </div>
+    </section>
+    <!-- <div class="section-divider"></div> -->
+    <section class="centered">
+        <div class="section-content">
+            <h1 class="title section-title">Joined Associations</h1>
+            
+            <div class="partner-grid">
+                <?php
+                // Get saved associations from the options table
+                $associations = get_option('joint_associations', []);
+
+                if (!empty($associations)) {
+                    foreach ($associations as $association) {
+                        $logo_url = !empty($association['logo_url']) ? esc_url($association['logo_url']) : get_template_directory_uri() . '/img/default-logo.png';
+                        $name = esc_html($association['name']);
+                        $description = esc_html($association['description']);
+                        $website = !empty($association['website']) ? esc_url($association['website']) : '#'; // Use '#' if no website is provided
+                        ?>
+                        <div class="partner-grid-item">
+                            <div class="logo">
+                                <img src="<?= $logo_url; ?>" alt="<?= $name; ?>">
+                            </div>
+                            <div class="content">
+                                <h2>
+                                    <a href="<?= $website; ?>" class="link no-color" target="_blank"><?= $name; ?></a>
+                                </h2>
+                                <p><?= $description; ?></p>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                } else {
+                    // If no associations are found, display a message
+                    echo '<p>No joined associations found.</p>';
+                }
+                ?>
+            </div>
         </div>
     </section>
 </main>

@@ -82,15 +82,26 @@ class FUST_News
         <?php
 	}
 
-    public static function save_post( $post )
-	{
-        # Sanity checks
-		if (!wp_verify_nonce($_POST['fust_news_data_metabox_nonce'], 'fust_save_news' ) ) return;
-		if (wp_is_post_autosave($post)) return;
-
-        # Save the meta field fust_external_link
-		if (isset($_POST['fust_external_link'])) {
-            update_post_meta($post, 'external_link', sanitize_text_field( $_POST['fust_external_link']));
+    public static function save_post( $post ) {
+        # Check if the nonce is set before trying to verify it
+        if (!isset($_POST['fust_news_data_metabox_nonce'])) {
+            return;
         }
-	}
+
+        # Verify the nonce
+        if (!wp_verify_nonce($_POST['fust_news_data_metabox_nonce'], 'fust_save_news' ) ) {
+            return;
+        }
+
+        # Additional sanity check to prevent autosave from triggering the save function
+        if (wp_is_post_autosave($post)) {
+            return;
+        }
+
+        # Save the meta field fust_external_link if it's set
+        if (isset($_POST['fust_external_link'])) {
+            update_post_meta($post, 'external_link', sanitize_text_field($_POST['fust_external_link']));
+        }
+    }
+
 }

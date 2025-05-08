@@ -9,6 +9,7 @@
   --color-pink: #C67DFF;
   --color-pink-light: #cd8ffd;
   --color-purple: #7958B3;
+  --color-purple-light: #9474cc;
   --color-yellow: #FFBD59;
   --text-color-dark: #1E1E1E;
   --text-color-body: rgba(30, 30, 30, 0.8);
@@ -34,6 +35,7 @@ body {
   padding: 0;
   font-family: "Lato", sans-serif;
   color: var(--text-color-dark);
+  background-color: #fff;
 }
 body.overflow-hidden {
   overflow: hidden;
@@ -44,13 +46,37 @@ input, textarea {
   color: var(--text-color-dark);
 }
 
+a.link {
+  color: var(--color-purple);
+  text-decoration: none;
+}
+a.link.white {
+  color: white;
+}
+a.link.no-color {
+  color: inherit;
+  transition: color 100ms ease;
+}
+a.link.no-color:hover {
+  color: var(--color-purple);
+}
+
 article {
-  color: var(--text-color-body);
   margin-top: 20px;
 }
 article p {
   line-height: 1.75;
   margin-bottom: 8px;
+}
+article summary {
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+article details > * {
+  margin-left: 2rem;
+}
+article details > summary {
+  margin-left: 0;
 }
 
 .abs-centered {
@@ -62,21 +88,42 @@ article p {
 
 /* Text */
 .title {
-  font-size: 48px;
+  font-size: 2.5rem;
 }
 
 .section-title {
-  font-size: 36px;
+  font-size: 2rem;
 }
 
 .subtitle {
   font-size: 1.2rem;
 }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.alignright {
+  float: right;
+  margin: 1rem;
+  margin-right: 0;
+}
+
+.alignleft {
+  float: left;
+  margin: 1rem;
+  margin-left: 0;
+}
+
 /* Sections */
 section {
   position: relative;
   padding: 4rem var(--padding-body-horizontal);
+}
+section:nth-child(odd):not(:first-child) {
+  background-color: #f8f9fa;
 }
 
 section.centered {
@@ -102,8 +149,9 @@ section h1.section-title {
 }
 
 .section-divider {
-  border-bottom: 1px solid #bebebe;
-  margin: 4rem auto;
+  border-bottom: 1px solid var(--color-pink-light);
+  margin: 2rem auto;
+  width: 100%;
 }
 
 /* Page layout (keeps footer stuck to bottom) */

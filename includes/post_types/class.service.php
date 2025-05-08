@@ -90,19 +90,29 @@ class FUST_Service
         <?php
 	}
 
-    public static function save_post( $post )
-	{
-        # Sanity checks
-		if (!wp_verify_nonce($_POST['fust_service_data_metabox_nonce'], 'fust_save_service' ) ) return;
-		if (wp_is_post_autosave($post)) return;
+    public static function save_post( $post ) {
+        # Check if the nonce is set before trying to verify it
+        if (!isset($_POST['fust_service_data_metabox_nonce'])) {
+            return;
+        }
 
-        # Save the meta fields
-		if (isset($_POST['fust_external_link'])) {
-            update_post_meta($post, 'external_link', sanitize_text_field( $_POST['fust_external_link']));
+        # Verify the nonce
+        if (!wp_verify_nonce($_POST['fust_service_data_metabox_nonce'], 'fust_save_service' ) ) {
+            return;
+        }
+
+        # Additional sanity check to prevent autosave from triggering the save function
+        if (wp_is_post_autosave($post)) {
+            return;
+        }
+
+        # Save the meta fields if set
+        if (isset($_POST['fust_external_link'])) {
+            update_post_meta($post, 'external_link', sanitize_text_field($_POST['fust_external_link']));
         }
 
         if (isset($_POST['fust_icon'])) {
             update_post_meta($post, 'icon', sanitize_text_field( $_POST['fust_icon']));
         }
-	}
+    }
 }

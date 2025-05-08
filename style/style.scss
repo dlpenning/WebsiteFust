@@ -1,7 +1,7 @@
 /*
 Section: Masthead
 */
-.masthead {
+section.masthead {
   background-color: var(--color-purple);
   color: #fff;
   padding: 8rem var(--padding-body-horizontal);
@@ -183,8 +183,10 @@ input:not([type=checkbox]):not([type=submit]), select {
     background-color: #fff;
   }
 
-  input[type=submit] {
+  input[type=submit],
+  button[type=submit] {
     display: inline-block;
+    font-family: 'Lato', sans-serif;
     padding: 8px 24px;
     border-radius: 1000px;
     text-decoration: none;
@@ -196,13 +198,31 @@ input:not([type=checkbox]):not([type=submit]), select {
     color: #fff;
     transition: background-color 200ms;
 
+    &.has-spinner {
+      width: auto !important;
+
+      & + * {
+        width: 24px !important;
+      }
+    }
+
     &:hover {
       background-color: var(--color-pink-light);
+    }
+    
+    &[disabled] {
+      background-color: #aaa;
     }
 
     &:not([disabled]) {
       cursor: pointer;
     }
+  }
+
+  // Error output box
+  .wpcf7-response-output {
+    padding: 0.6em 1em !important;
+    border-radius: 8px;
   }
 
   // Special styling for bottom rows (no bar, styling for checkbox)
@@ -214,7 +234,8 @@ input:not([type=checkbox]):not([type=submit]), select {
 
   form > p:nth-last-child(3) { display: block; }
 
-  [data-name=pay-consent] {
+  [data-name=pay-consent],
+  [data-name=privacy-consent] {
     .wpcf7-list-item {
       margin-left: 0;
     }
@@ -303,6 +324,44 @@ input:not([type=checkbox]):not([type=submit]), select {
     }
   }
 }
+
+
+input[type=submit],
+button[type=submit] {
+    display: inline-block;
+    font-family: 'Lato', sans-serif;
+    padding: 8px 24px;
+    border-radius: 1000px;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 1rem;
+    border: none;
+    outline-color: var(--color-purple);
+    background-color: var(--color-pink);
+    color: #fff;
+    transition: background-color 200ms;
+
+    &.has-spinner {
+      width: auto !important;
+
+      & + * {
+        width: 24px !important;
+      }
+    }
+
+    &:hover {
+      background-color: var(--color-pink-light);
+    }
+    
+    &[disabled] {
+      background-color: #aaa;
+    }
+
+    &:not([disabled]) {
+      cursor: pointer;
+    }
+  }
+
 
 /*
 Section: Login
@@ -407,6 +466,77 @@ Section: Login
   }
 }
 
+/*
+Section: Activities
+*/
+.activity-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    span {
+        font-size: 14px;
+        display: inline-block;
+        color: #fff;
+        background-color: var(--color-yellow);
+        padding: 4px 14px;
+        border-radius: 100px;
+    }
+}
+
+.activity > .section-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+
+    .activity-details {
+        flex: 1;
+    }
+
+    .activity-metadata {
+        width: 400px;
+        padding: 2rem;
+        background-color: var(--color-purple);
+        color: #fff;
+        border-radius: 8px;
+
+        h3 {
+            font-size: 24px;
+            margin-bottom: 1.5rem;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1.5rem;
+
+            li + li { margin-top: 12px; }
+        }
+
+        .icon-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background-color: var(--color-pink);
+            border-radius: 100px;
+            margin-right: 8px;
+        }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .activity > .section-content {
+        display: block;
+
+        .activity-metadata {
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+    }
+}
+
 
 
 @media screen and (max-width: 1000px) {
@@ -423,13 +553,14 @@ Section: Login
       }
     }
   }
-  .masthead {
+  
+  section.masthead {
     padding: 3rem var(--padding-body-horizontal) 5rem;
-  }
 
-  .masthead .section-content {
-    flex-direction: column;
-    gap: 32px;
+    .section-content {
+      flex-direction: column;
+      gap: 32px;
+    }
   }
 
   .about-container {
@@ -468,7 +599,72 @@ Section: Login
 }
 
 @media screen and (max-width: 480px) {
-  .masthead .section-contnet {
+  .masthead .section-content {
     gap: 24px;
   }
+}
+
+
+
+
+
+/*
+Knowledge database
+*/
+
+.knowledge-database-header {
+    background-color: var(--color-purple);
+    color: #fff;
+
+    & > article > .section-title {
+        margin: 1rem 0 0;
+    }
+}
+
+article.knowledge-database-article {
+    h1 {
+        font-size: 2rem;
+        margin: 2rem 0 10px;
+    }
+
+    & > * {
+        margin-bottom: 10px;
+    }
+
+    details {
+        border: 1px dotted var(--color-pink);
+        border-radius: 5px;
+        padding: 1rem 1.5rem;
+        margin: 1rem 0;
+
+        summary {
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        summary + p {
+            margin: 0.5rem 0 0 1.1rem;
+        }
+
+        
+    }
+}
+
+
+// Activity styling
+.activity-details-sign-up {
+    h2 {
+        margin: 0.67em 0;
+    }
+}
+
+#activity-signup-form {
+    label {
+        display: inline-block;
+        margin: 0.67em 0 0.33em;
+    }
+
+    input + button {
+        margin-top: 1rem;
+    }
 }

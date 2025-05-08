@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,500;0,700;1,400&family=League+Spartan:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- <script src="https://js.stripe.com/v3/"></script> -->
     
     <link href="<?= get_template_directory_uri() ?>/assets/fontawesome/css/fontawesome.css" rel="stylesheet">
     <link href="<?= get_template_directory_uri() ?>/assets/fontawesome/css/brands.css" rel="stylesheet">

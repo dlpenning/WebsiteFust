@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to F.U.S.T. - Thank You for Joining!</title>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+            color: #1E1E1E;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        img {
+            display: block;
+            border: 0;
+        }
+
+        .top-bar {
+            background-color: #C67DFF;
+            height: 32px;
+            width: 100%;
+        }
+
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .main-bar {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .main-bar h1 {
+            font-family: "League Spartan", sans-serif;
+            font-weight: 700;
+            margin: 0 0 10px;
+        }
+
+        .section {
+            padding: 30px;
+            background-color: #fff;
+            text-align: left;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .section h1 {
+            font-family: "League Spartan", sans-serif;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .section p, .section li {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #C67DFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background-color: #cd8ffd;
+        }
+
+        @media screen and (max-width: 600px) {
+            .content {
+                padding: 0 10px;
+            }
+
+            .main-bar,
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+        <tr>
+            <td class="top-bar"></td>
+        </tr>
+        <tr>
+            <td align="center">
+                <table class="content" role="presentation" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="main-bar">
+                            <a href="https://fusttilburg.nl" target="_blank" style="display: inline-block;">
+                                <img src="https://fusttilburg.nl/wp-content/uploads/2023/11/cropped-fust_sq_512w.png" alt="F.U.S.T. Logo" height="50px">
+                            </a>
+                            <h1>Welcome to F.U.S.T.</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="section">
+                            <p>Dear {NAME},</p>
+                            <p>Thank you for joining the Federal Union Students Tilburg (F.U.S.T.) community! We are thrilled to have you on board and look forward to meeting you!</p>
+                            <p>Shortly, you will receive further information regarding your membership, including upcoming events, your payment, and how you can get involved. We aim to foster a vibrant student community where your voice matters, and your ideas can make an impact.</p>
+                            <p>Interested in taking your involvement to the next level? Here are a few ways you can become an active member:</p>
+                            <ul>
+                                <li><b>Join committees</b>: Get involved in one of our committees focused on various aspects such as event planning, promotion and one of our portfolios!</li>
+                                <li><b>Become a Volunteer</b>: Contribute your skills and time to support our member services and events. Every bit of help counts!</li>
+                                <li><b>Share Your Ideas</b>: Have a vision for improving student life? Share your ideas with us and let's work together to make them a reality.</li>
+                            </ul>
+                            <p>Stay tuned for updates, and in the meantime, feel free to explore the members area on our website for more information.</p>
+                            <p>Once again, welcome to F.U.S.T.! We're excited to have you as part of our community.</p>
+                            <p>Best regards,</p>
+                            <p>Thijs Jansen</p>
+                            <p>Chairman  Federal Union Students Tilburg (F.U.S.T.)</p>
+                            <p><i>PS. We've also created an account for you on our website! Press the button below to reset your password and log in.</i></p>
+                            <p align="center">
+                                <a href="{RESET_URL}" class="button" target="_blank">Reset your password</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
